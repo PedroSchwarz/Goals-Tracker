@@ -3,6 +3,7 @@ package com.pedro.schwarz.goalstracker.ui.activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.pedro.schwarz.goalstracker.R
@@ -10,7 +11,7 @@ import com.pedro.schwarz.goalstracker.R
 class MainActivity : AppCompatActivity() {
 
     private val controller: NavController by lazy {
-        findViewById(R.id.nav_host)
+        findNavController(R.id.nav_host)
     }
 
     private val appBarConfiguration: AppBarConfiguration by lazy {

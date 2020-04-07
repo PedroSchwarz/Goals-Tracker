@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.pedro.schwarz.goalstracker.ui.fragment.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        android:label="Access your Account"
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment"
@@ -21,13 +21,13 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.pedro.schwarz.goalstracker.ui.fragment.RegisterFragment"
-        android:label="fragment_register"
+        android:label="Create an Account"
         tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/goalsFragment"
         android:name="com.pedro.schwarz.goalstracker.ui.fragment.GoalsFragment"
-        android:label="goals_fragment"
-        tools:layout="@layout/goals_fragment" >
+        android:label="Goals"
+        tools:layout="@layout/goals_fragment">
         <action
             android:id="@+id/action_goalsFragment_to_goalDetailsFragment"
             app:destination="@id/goalDetailsFragment"
@@ -46,8 +46,8 @@
     <fragment
         android:id="@+id/goalDetailsFragment"
         android:name="com.pedro.schwarz.goalstracker.ui.fragment.GoalDetailsFragment"
-        android:label="goal_details_fragment"
-        tools:layout="@layout/goal_details_fragment" >
+        android:label="Details"
+        tools:layout="@layout/goal_details_fragment">
         <action
             android:id="@+id/action_goalDetailsFragment_to_checkpointsFragment"
             app:destination="@id/checkpointsFragment"
@@ -55,17 +55,21 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
     <fragment
         android:id="@+id/goalFormFragment"
         android:name="com.pedro.schwarz.goalstracker.ui.fragment.GoalFormFragment"
-        android:label="goal_form_fragment"
+        android:label="Save Goal"
         tools:layout="@layout/goal_form_fragment" />
     <fragment
         android:id="@+id/checkpointsFragment"
         android:name="com.pedro.schwarz.goalstracker.ui.fragment.CheckpointsFragment"
-        android:label="checkpoints_fragment"
-        tools:layout="@layout/checkpoints_fragment" >
+        android:label="Checkpoints"
+        tools:layout="@layout/checkpoints_fragment">
         <action
             android:id="@+id/action_checkpointsFragment_to_checkpointFormFragment"
             app:destination="@id/checkpointFormFragment"
@@ -73,12 +77,21 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
     <fragment
         android:id="@+id/checkpointFormFragment"
         android:name="com.pedro.schwarz.goalstracker.ui.fragment.CheckpointFormFragment"
-        android:label="checkpoint_form_fragment"
-        tools:layout="@layout/checkpoint_form_fragment" />
+        android:label="Save Checkpoint"
+        tools:layout="@layout/checkpoint_form_fragment" >
+        <argument
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
     <action
         android:id="@+id/action_global_goalsFragment"
         app:destination="@id/goalsFragment"
