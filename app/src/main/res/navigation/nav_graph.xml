@@ -1,5 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
 
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.pedro.schwarz.goalstracker.ui.fragment.LoginFragment"
+        android:label="Access your Account"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.pedro.schwarz.goalstracker.ui.fragment.RegisterFragment"
+        android:label="Create an Account"
+        tools:layout="@layout/fragment_register" />
+    <fragment
+        android:id="@+id/goalsFragment"
+        android:name="com.pedro.schwarz.goalstracker.ui.fragment.GoalsFragment"
+        android:label="Goals"
+        tools:layout="@layout/goals_fragment">
+        <action
+            android:id="@+id/action_goalsFragment_to_goalDetailsFragment"
+            app:destination="@id/goalDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_goalsFragment_to_goalFormFragment"
+            app:destination="@id/goalFormFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/goalDetailsFragment"
+        android:name="com.pedro.schwarz.goalstracker.ui.fragment.GoalDetailsFragment"
+        android:label="Details"
+        tools:layout="@layout/goal_details_fragment">
+        <action
+            android:id="@+id/action_goalDetailsFragment_to_checkpointsFragment"
+            app:destination="@id/checkpointsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
+    <fragment
+        android:id="@+id/goalFormFragment"
+        android:name="com.pedro.schwarz.goalstracker.ui.fragment.GoalFormFragment"
+        android:label="Save Goal"
+        tools:layout="@layout/goal_form_fragment" />
+    <fragment
+        android:id="@+id/checkpointsFragment"
+        android:name="com.pedro.schwarz.goalstracker.ui.fragment.CheckpointsFragment"
+        android:label="Checkpoints"
+        tools:layout="@layout/checkpoints_fragment">
+        <action
+            android:id="@+id/action_checkpointsFragment_to_checkpointFormFragment"
+            app:destination="@id/checkpointFormFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkpointFormFragment"
+        android:name="com.pedro.schwarz.goalstracker.ui.fragment.CheckpointFormFragment"
+        android:label="Save Checkpoint"
+        tools:layout="@layout/checkpoint_form_fragment" >
+        <argument
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_goalsFragment"
+        app:destination="@id/goalsFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"
+        app:popUpTo="@id/goalsFragment"
+        app:popUpToInclusive="true" />
 </navigation>
