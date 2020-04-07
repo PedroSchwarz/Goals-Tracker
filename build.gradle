@@ -13,6 +13,8 @@ buildscript {
         // Safe Args
         def nav_version = "2.2.1"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+        // Google Services
+        classpath 'com.google.gms:google-services:4.3.3'
     }
 }
 
