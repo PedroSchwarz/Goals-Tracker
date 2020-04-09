@@ -26,15 +26,10 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val viewBinding = FragmentLoginBinding.inflate(layoutInflater, container, false)
+        setViewBindingData(viewBinding)
         setEnterBtn(viewBinding)
         setGoToRegisterBtn(viewBinding)
-        setViewBindingData(viewBinding)
         return viewBinding.root
-    }
-
-    private fun setViewBindingData(viewBinding: FragmentLoginBinding) {
-        viewBinding.lifecycleOwner = this
-        viewBinding.user = userData
     }
 
     private fun setGoToRegisterBtn(viewBinding: FragmentLoginBinding) {
@@ -53,7 +48,12 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun isFormValid() : Boolean{
+    private fun setViewBindingData(viewBinding: FragmentLoginBinding) {
+        viewBinding.lifecycleOwner = this
+        viewBinding.user = userData
+    }
+
+    private fun isFormValid(): Boolean {
         userData.email.value?.let { email ->
             if (isEmpty(email) || !isValidEmail(email)) return false
         }

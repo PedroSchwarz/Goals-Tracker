@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="user"
+            type="com.pedro.schwarz.goalstracker.ui.databinding.UserData" />
+
+        <variable
             name="onRegister"
             type="android.view.View.OnClickListener" />
 
@@ -29,9 +33,9 @@
             android:scaleType="centerCrop"
             android:src="@drawable/image_placeholder"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:loadImage="@{user.imageUrl}" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/register_image_btn"
@@ -56,13 +60,15 @@
             app:boxBackgroundColor="#00FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_image">
+            app:layout_constraintTop_toBottomOf="@+id/register_image"
+            app:validateField="@{user.name}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Full name"
-                android:inputType="textCapWords" />
+                android:inputType="textCapWords"
+                android:text="@={user.name}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -73,13 +79,15 @@
             app:boxBackgroundColor="#00FFFFFF"
             app:layout_constraintEnd_toEndOf="@+id/register_name"
             app:layout_constraintStart_toStartOf="@+id/register_name"
-            app:layout_constraintTop_toBottomOf="@+id/register_name">
+            app:layout_constraintTop_toBottomOf="@+id/register_name"
+            app:validateField="@{user.email}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email..."
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:text="@={user.email}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -91,13 +99,15 @@
             app:layout_constraintEnd_toEndOf="@+id/register_email"
             app:layout_constraintStart_toStartOf="@+id/register_email"
             app:layout_constraintTop_toBottomOf="@+id/register_email"
-            app:passwordToggleEnabled="true">
+            app:passwordToggleEnabled="true"
+            app:validateField="@{user.password}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password..."
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:text="@={user.password}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -108,6 +118,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:onClick="@{onRegister}"
             android:text="Register"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
