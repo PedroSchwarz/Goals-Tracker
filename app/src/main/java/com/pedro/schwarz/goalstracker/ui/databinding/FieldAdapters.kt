@@ -8,7 +8,9 @@ import com.pedro.schwarz.goalstracker.ui.validator.validateEmail
 import com.pedro.schwarz.goalstracker.ui.validator.validatePassword
 import com.pedro.schwarz.goalstracker.ui.validator.validateSimpleText
 
-const val NAME_FIELD = TYPE_TEXT_FLAG_CAP_WORDS.or(TYPE_CLASS_TEXT)
+const val SIMPLE_FIELD = TYPE_TEXT_FLAG_CAP_WORDS.or(TYPE_CLASS_TEXT)
+const val MULTI_FIELD =
+    TYPE_TEXT_FLAG_CAP_SENTENCES.or(TYPE_TEXT_FLAG_MULTI_LINE).or(TYPE_CLASS_TEXT)
 const val EMAIL_FIELD = TYPE_TEXT_VARIATION_EMAIL_ADDRESS.or(TYPE_CLASS_TEXT)
 const val PASSWORD_FIELD = TYPE_TEXT_VARIATION_PASSWORD.or(TYPE_CLASS_TEXT)
 
@@ -18,7 +20,10 @@ fun TextInputLayout.validateField(value: String) {
         it.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 when (it.inputType) {
-                    NAME_FIELD -> {
+                    SIMPLE_FIELD -> {
+                        validateSimpleText(this, value)
+                    }
+                    MULTI_FIELD -> {
                         validateSimpleText(this, value)
                     }
                     EMAIL_FIELD -> {
