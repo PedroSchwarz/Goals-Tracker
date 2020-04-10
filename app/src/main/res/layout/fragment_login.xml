@@ -5,9 +5,15 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="user"
             type="com.pedro.schwarz.goalstracker.ui.databinding.UserData" />
+
+        <variable
+            name="authViewModel"
+            type="com.pedro.schwarz.goalstracker.ui.viewmodel.AuthViewModel" />
 
         <variable
             name="onEnter"
@@ -23,6 +29,19 @@
         android:layout_height="match_parent"
         tools:context=".ui.fragment.LoginFragment">
 
+        <ProgressBar
+            android:id="@+id/login_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:indeterminate="true"
+            android:visibility="@{authViewModel.isLoading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/login_email"
             android:layout_width="match_parent"
@@ -34,7 +53,7 @@
             app:boxBackgroundMode="filled"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_progress"
             app:validateField="@{user.email}">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -72,6 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/colorAccent"
+            android:enabled="@{authViewModel.isLoading ? false : true}"
             android:onClick="@{onEnter}"
             android:text="Enter"
             app:layout_constraintBottom_toTopOf="@+id/login_register_btn"
@@ -86,10 +106,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:enabled="@{authViewModel.isLoading ? false : true}"
             android:onClick="@{onGoToRegister}"
             android:text="Create an Account"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
