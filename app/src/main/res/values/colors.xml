@@ -11,4 +11,16 @@
     <color name="colorDark">#222222</color>
     <color name="colorMediumLight">#C5C5C5</color>
     <color name="colorMediumDark">#4C4C4C</color>
+    <!--  Categories & Priorities colors  -->
+    <color name="colorFitness">#FF009688</color>
+    <color name="colorWork">#FF9C27B0</color>
+    <color name="colorSchool">#03A9F4</color>
+    <color name="colorSocial">#4CAF50</color>
+    <color name="colorLove">#FFE91E63</color>
+    <color name="colorTravel">#FF6E40</color>
+    <color name="colorPurchase">#FBCC21</color>
+    <color name="colorFinancial">#FFFF9800</color>
+    <color name="colorLow">#4CAF50</color>
+    <color name="colorMedium">#FBCC21</color>
+    <color name="colorHigh">#F44336</color>
 </resources>
