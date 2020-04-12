@@ -24,9 +24,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterFragment : Fragment() {
 
-    private val controller by lazy {
-        findNavController()
-    }
+    private val controller by lazy { findNavController() }
 
     private val viewModel by viewModel<AuthViewModel>()
 

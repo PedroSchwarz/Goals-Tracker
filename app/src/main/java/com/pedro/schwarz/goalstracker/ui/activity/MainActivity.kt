@@ -22,8 +22,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        controller.addOnDestinationChangedListener { _, destination, _ ->
+        controller.addOnDestinationChangedListener { _, destination, arguments ->
             title = destination.label
+            if (destination.id == R.id.goalDetailsFragment) {
+                arguments?.let {
+                    destination.label = "${it.getString("title")} Details"
+                }
+            }
         }
 
         setupActionBarWithNavController(controller, appBarConfiguration)

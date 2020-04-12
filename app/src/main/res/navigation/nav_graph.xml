@@ -59,12 +59,19 @@
             android:name="id"
             app:argType="long"
             android:defaultValue="0L" />
+        <argument
+            android:name="title"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/goalFormFragment"
         android:name="com.pedro.schwarz.goalstracker.ui.fragment.GoalFormFragment"
         android:label="Save Goal"
-        tools:layout="@layout/goal_form_fragment" />
+        tools:layout="@layout/goal_form_fragment" >
+        <argument android:name="id"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
     <fragment
         android:id="@+id/checkpointsFragment"
         android:name="com.pedro.schwarz.goalstracker.ui.fragment.CheckpointsFragment"

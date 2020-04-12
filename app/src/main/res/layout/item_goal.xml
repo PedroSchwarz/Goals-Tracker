@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="goal"
+            type="com.pedro.schwarz.goalstracker.ui.databinding.GoalData" />
+
+        <variable
+            name="category"
+            type="com.pedro.schwarz.goalstracker.model.Category" />
+
+        <variable
+            name="priority"
+            type="com.pedro.schwarz.goalstracker.model.Priority" />
+
+        <variable
+            name="onItemClick"
+            type="android.view.View.OnClickListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:foreground="?android:selectableItemBackground"
+            android:onClick="@{onItemClick}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/item_goal_priority"
+                    android:layout_width="10dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:loadColor="@{priority.color}"
+                    tools:srcCompat="@color/colorSuccess" />
+
+                <TextView
+                    android:id="@+id/item_goal_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@{goal.title}"
+                    android:textColor="@color/colorDark"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/item_goal_priority"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Goal's title" />
+
+                <TextView
+                    android:id="@+id/item_goal_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{goal.description}"
+                    app:layout_constraintEnd_toEndOf="@+id/item_goal_title"
+                    app:layout_constraintStart_toStartOf="@+id/item_goal_title"
+                    app:layout_constraintTop_toBottomOf="@+id/item_goal_title"
+                    tools:text="Goal's description" />
+
+                <ProgressBar
+                    android:id="@+id/item_goal_progress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:max="100"
+                    app:completedMilestones="@{goal.completedMilestones}"
+                    app:layout_constraintEnd_toStartOf="@+id/item_goal_milestones_card"
+                    app:layout_constraintStart_toStartOf="@+id/item_goal_description"
+                    app:layout_constraintTop_toBottomOf="@+id/item_goal_description"
+                    app:milestones="@{goal.milestones}" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/item_goal_milestones_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/colorSuccess"
+                    app:cardCornerRadius="16dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:layout_constraintBottom_toBottomOf="@+id/item_goal_progress"
+                    app:layout_constraintEnd_toEndOf="@+id/item_goal_description"
+                    app:layout_constraintTop_toTopOf="@+id/item_goal_progress">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/item_goal_milestones"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="8dp"
+                            android:textColor="@color/colorLight"
+                            android:textSize="12sp"
+                            app:completedMilestones="@{goal.completedMilestones}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:milestones="@{goal.milestones}"
+                            tools:text="0/0" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/item_goal_category_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/item_goal_progress"
+                    app:layout_constraintTop_toBottomOf="@+id/item_goal_progress"
+                    app:loadCardColor="@{category.color}">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/item_goal_category_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="8dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/item_goal_category_title"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintHorizontal_chainStyle="packed"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:loadIcon="@{category.icon}"
+                            app:srcCompat="@drawable/ic_school" />
+
+                        <TextView
+                            android:id="@+id/item_goal_category_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="16dp"
+                            android:text="@{category.title}"
+                            android:textAllCaps="true"
+                            android:textColor="@color/colorLight"
+                            app:layout_constraintBottom_toBottomOf="@+id/item_goal_category_icon"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/item_goal_category_icon"
+                            app:layout_constraintTop_toTopOf="@+id/item_goal_category_icon"
+                            tools:text="Category's title" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/item_goal_target_date"
+                    app:layout_constraintEnd_toStartOf="@+id/item_goal_target_date"
+                    app:layout_constraintTop_toTopOf="@+id/item_goal_target_date"
+                    app:srcCompat="@drawable/ic_target_date_grey" />
+
+                <TextView
+                    android:id="@+id/item_goal_target_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorMediumLight"
+                    app:formatDate="@{goal.targetDate}"
+                    app:layout_constraintBottom_toBottomOf="@+id/item_goal_category_card"
+                    app:layout_constraintEnd_toEndOf="@+id/item_goal_milestones_card"
+                    app:layout_constraintTop_toTopOf="@+id/item_goal_category_card"
+                    tools:text="Goal's target date" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

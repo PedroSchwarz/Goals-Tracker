@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
 
         <variable
             name="goal"
             type="com.pedro.schwarz.goalstracker.ui.databinding.GoalData" />
 
         <variable
+            name="viewModel"
+            type="com.pedro.schwarz.goalstracker.ui.viewmodel.GoalFormViewModel" />
+
+        <variable
             name="onSelectDate"
             type="android.view.View.OnClickListener" />
     </data>
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -32,6 +38,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:indeterminate="true"
+                android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -98,7 +105,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textAlignment="textEnd"
+                android:textAlignment="center"
                 app:formatDate="@{goal.targetDate}"
                 app:layout_constraintBaseline_toBaselineOf="@+id/form_date_btn"
                 app:layout_constraintEnd_toEndOf="@+id/form_goal_description"
@@ -140,10 +147,11 @@
                 app:fabSize="mini"
                 app:layout_constraintEnd_toEndOf="@+id/form_goal_category_section"
                 app:layout_constraintTop_toBottomOf="@+id/form_goal_category_section"
+                app:loadCategoryContent="@{goal.categoryId}"
                 app:tint="@color/colorLight" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/form_goal_categories_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -161,7 +169,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/form_goal_category_indicator"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/divider"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+                app:layout_constraintTop_toBottomOf="@+id/form_goal_categories_list" />
 
             <View
                 android:id="@+id/divider2"
@@ -185,9 +193,11 @@
                 app:fabSize="mini"
                 app:layout_constraintEnd_toEndOf="@+id/form_goal_priority_section"
                 app:layout_constraintTop_toBottomOf="@+id/form_goal_priority_section"
+                app:loadPriorityContent="@{goal.priorityId}"
                 app:tint="@color/colorLight" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/form_goal_priorities_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"

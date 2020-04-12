@@ -4,7 +4,13 @@ import androidx.room.Room
 import com.pedro.schwarz.goalstracker.database.AppDatabase
 import com.pedro.schwarz.goalstracker.database.dao.GoalDAO
 import com.pedro.schwarz.goalstracker.repository.AuthRepository
+import com.pedro.schwarz.goalstracker.repository.GoalRepository
+import com.pedro.schwarz.goalstracker.ui.recyclerview.adapter.CategoryAdapter
+import com.pedro.schwarz.goalstracker.ui.recyclerview.adapter.GoalAdapter
+import com.pedro.schwarz.goalstracker.ui.recyclerview.adapter.PriorityAdapter
 import com.pedro.schwarz.goalstracker.ui.viewmodel.AuthViewModel
+import com.pedro.schwarz.goalstracker.ui.viewmodel.GoalFormViewModel
+import com.pedro.schwarz.goalstracker.ui.viewmodel.GoalsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -17,10 +23,17 @@ val databaseModules = module {
 val daoModules = module {
     single<GoalDAO> { get<AppDatabase>().getGoalDAO() }
     single<AuthRepository> { AuthRepository() }
+    single<GoalRepository> { GoalRepository(get()) }
 }
 
-val uiModules = module { }
+val uiModules = module {
+    factory<GoalAdapter> { GoalAdapter() }
+    factory<CategoryAdapter> { CategoryAdapter() }
+    factory<PriorityAdapter> { PriorityAdapter() }
+}
 
 val viewModelModules = module {
     viewModel<AuthViewModel> { AuthViewModel(get()) }
+    viewModel<GoalsViewModel> { GoalsViewModel(get()) }
+    viewModel<GoalFormViewModel> { GoalFormViewModel(get()) }
 }

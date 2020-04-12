@@ -99,11 +99,17 @@ class AuthRepository {
     }
 
     fun checkUserState() = MutableLiveData<Resource<Unit>>().also { liveData ->
-        if (auth.currentUser != null) {
-            liveData.postValue(Success())
-        } else {
-            liveData.postValue(Failure())
+        auth.addAuthStateListener { firebaseAuth ->
+            if (firebaseAuth.currentUser != null) {
+                liveData.postValue(Success())
+            } else {
+                liveData.postValue(Failure())
+            }
         }
+    }
+
+    fun signOutUser() {
+        auth.signOut()
     }
 
     companion object {

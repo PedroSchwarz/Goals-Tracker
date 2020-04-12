@@ -21,9 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment() {
 
-    private val controller by lazy {
-        findNavController()
-    }
+    private val controller by lazy { findNavController() }
 
     private val viewModel by viewModel<AuthViewModel>()
 
@@ -106,6 +104,7 @@ class LoginFragment : Fragment() {
     private fun setViewBindingData(viewBinding: FragmentLoginBinding) {
         viewBinding.lifecycleOwner = this
         viewBinding.user = userData
+        viewBinding.authViewModel = viewModel
     }
 
     private fun isFormValid(): Boolean {
