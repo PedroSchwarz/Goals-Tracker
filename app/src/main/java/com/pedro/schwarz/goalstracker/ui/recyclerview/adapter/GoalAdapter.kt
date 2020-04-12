@@ -72,10 +72,10 @@ class GoalAdapter(var onItemClick: (goal: Goal) -> Unit = {}) :
         }
 
         private fun getCategory(goal: Goal): Category? =
-            getCategories(itemView.context).find { category -> category.id == goal.categoryId }
+            getCategories().find { category -> category.id == goal.categoryId }
 
         private fun getPriority(goal: Goal): Priority? =
-            getPriorities(itemView.context).find { priority -> priority.id == goal.priorityId }
+            getPriorities().find { priority -> priority.id == goal.priorityId }
 
         fun changeLifeCycleState(state: Int) {
             when (state) {

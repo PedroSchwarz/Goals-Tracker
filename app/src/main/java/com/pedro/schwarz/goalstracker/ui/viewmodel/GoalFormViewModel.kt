@@ -27,6 +27,8 @@ class GoalFormViewModel(private val goalRepository: GoalRepository) : ViewModel(
         else goalRepository.insertGoal(goal.copy(userId = auth.currentUser!!.uid), job)
     }
 
+    fun fetchGoal(goalId: Long) = goalRepository.fetchGoal(goalId, auth.currentUser!!.uid)
+
     override fun onCleared() {
         super.onCleared()
         job.cancel()

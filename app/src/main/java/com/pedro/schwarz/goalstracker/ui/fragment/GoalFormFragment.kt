@@ -49,12 +49,17 @@ class GoalFormFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        if (goalId > 0L) {
+            viewModel.fetchGoal(goalId).observe(this, Observer { result ->
+                goalData.setGoal(result)
+            })
+        }
         populateLists()
     }
 
     private fun populateLists() {
-        categoryAdapter.submitList(getCategories(requireContext()))
-        priorityAdapter.submitList(getPriorities(requireContext()))
+        categoryAdapter.submitList(getCategories())
+        priorityAdapter.submitList(getPriorities())
     }
 
     override fun onCreateView(

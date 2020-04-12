@@ -14,6 +14,8 @@ class GoalRepository(private val goalDAO: GoalDAO) {
 
     fun fetchGoals(userId: String) = goalDAO.fetchGoals(userId)
 
+    fun fetchGoal(goalId: Long, userId: String) = goalDAO.fetchGoal(goalId, userId)
+
     fun insertGoal(goal: Goal, job: Job = Job()): LiveData<Resource<Unit>> {
         val liveData = MutableLiveData<Resource<Unit>>()
         CoroutineScope(Dispatchers.IO + job).launch {

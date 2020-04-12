@@ -9,6 +9,7 @@ import com.pedro.schwarz.goalstracker.ui.recyclerview.adapter.CategoryAdapter
 import com.pedro.schwarz.goalstracker.ui.recyclerview.adapter.GoalAdapter
 import com.pedro.schwarz.goalstracker.ui.recyclerview.adapter.PriorityAdapter
 import com.pedro.schwarz.goalstracker.ui.viewmodel.AuthViewModel
+import com.pedro.schwarz.goalstracker.ui.viewmodel.GoalDetailsViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.GoalFormViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.GoalsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -36,4 +37,5 @@ val viewModelModules = module {
     viewModel<AuthViewModel> { AuthViewModel(get()) }
     viewModel<GoalsViewModel> { GoalsViewModel(get()) }
     viewModel<GoalFormViewModel> { GoalFormViewModel(get()) }
+    viewModel<GoalDetailsViewModel> { GoalDetailsViewModel(get()) }
 }

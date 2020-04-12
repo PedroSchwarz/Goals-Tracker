@@ -1,6 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragment.GoalDetailsFragment" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="goal"
+            type="com.pedro.schwarz.goalstracker.ui.databinding.GoalData" />
+
+        <variable
+            name="onEditGoal"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragment.GoalDetailsFragment">
+
+        <TextView
+            android:id="@+id/goal_details_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@{goal.title}"
+            android:textColor="@color/colorDark"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Goal's title" />
+
+        <TextView
+            android:id="@+id/goal_details_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@{goal.description}"
+            android:textColor="@color/colorMediumDark"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/goal_details_title"
+            app:layout_constraintStart_toStartOf="@+id/goal_details_title"
+            app:layout_constraintTop_toBottomOf="@+id/goal_details_title"
+            tools:text="Goal's description" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="@+id/goal_details_description"
+            app:layout_constraintStart_toStartOf="@+id/goal_details_description"
+            app:layout_constraintTop_toBottomOf="@+id/goal_details_description" />
+
+        <TextView
+            android:id="@+id/goal_details_target_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/colorMediumDark"
+            app:formatDate="@{goal.targetDate}"
+            app:layout_constraintEnd_toStartOf="@+id/goal_details_created_at"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="@+id/divider3"
+            app:layout_constraintTop_toBottomOf="@+id/divider3"
+            tools:text="Goal's target date" />
+
+        <TextView
+            android:id="@+id/goal_details_created_at"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textAlignment="viewEnd"
+            app:formatDate="@{goal.createdAt}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/goal_details_target_date"
+            app:layout_constraintEnd_toEndOf="@+id/divider3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/goal_details_target_date"
+            tools:text="Goal's created at date" />
+
+        <ProgressBar
+            android:id="@+id/goal_details_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:completedMilestones="@{goal.completedMilestones}"
+            app:layout_constraintEnd_toEndOf="@+id/goal_details_created_at"
+            app:layout_constraintStart_toStartOf="@+id/goal_details_target_date"
+            app:layout_constraintTop_toBottomOf="@+id/goal_details_target_date"
+            app:milestones="@{goal.milestones}" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/goal_details_category_chip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="center"
+            android:textColor="@color/colorLight"
+            app:chipStartPadding="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/goal_details_priority_chip"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/goal_details_progress"
+            app:loadCategoryContent="@{goal.categoryId}"
+            tools:text="Category's title" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/goal_details_priority_chip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:textAlignment="center"
+            android:textColor="@color/colorLight"
+            app:chipStartPadding="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/goal_details_category_chip"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/goal_details_category_chip"
+            app:layout_constraintTop_toTopOf="@+id/goal_details_category_chip"
+            app:loadPriorityContent="@{goal.priorityId}"
+            tools:text="Priority's title" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="Milestones"
+            android:textAlignment="center"
+            android:textColor="@color/colorMediumDark"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/goal_details_category_chip"
+            app:layout_constraintTop_toBottomOf="@+id/goal_details_category_chip" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/goal_details_milestones"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+            android:textColor="@color/colorLight"
+            app:chipBackgroundColor="@color/colorSuccess"
+            app:completedMilestones="@{goal.completedMilestones}"
+            app:layout_constraintBottom_toBottomOf="@+id/textView5"
+            app:layout_constraintEnd_toEndOf="@+id/goal_details_priority_chip"
+            app:layout_constraintTop_toTopOf="@+id/textView5"
+            app:milestones="@{goal.milestones}"
+            tools:text="0/0" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/goal_details_add_milestone_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:backgroundTint="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/goal_details_edit_btn"
+            app:srcCompat="@drawable/ic_add_milestone"
+            app:tint="@color/colorLight" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/goal_details_edit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{onEditGoal}"
+            app:backgroundTint="@color/colorPrimary"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toTopOf="@+id/goal_details_add_milestone_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_edit"
+            app:tint="@color/colorLight" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

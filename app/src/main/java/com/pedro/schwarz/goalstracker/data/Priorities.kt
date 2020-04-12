@@ -1,10 +1,9 @@
 package com.pedro.schwarz.goalstracker.data
 
-import android.content.Context
 import com.pedro.schwarz.goalstracker.R
 import com.pedro.schwarz.goalstracker.model.Priority
 
-fun getPriorities(context: Context): List<Priority> {
+fun getPriorities(): List<Priority> {
     return listOf(
         Priority(
             id = 1,

@@ -1,10 +1,9 @@
 package com.pedro.schwarz.goalstracker.data
 
-import android.content.Context
 import com.pedro.schwarz.goalstracker.R
 import com.pedro.schwarz.goalstracker.model.Category
 
-fun getCategories(context: Context): List<Category> {
+fun getCategories(): List<Category> {
     return listOf(
         Category(
             id = 1,
