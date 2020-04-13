@@ -34,6 +34,10 @@ class GoalsFragment : Fragment() {
         setHasOptionsMenu(true)
         checkUserState()
         fetchGoals()
+        configGoalItemClick()
+    }
+
+    private fun configGoalItemClick() {
         goalAdapter.onItemClick = { goal ->
             goToDetails(goal.id, goal.title)
         }

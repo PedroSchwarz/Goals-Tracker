@@ -10,23 +10,19 @@ import androidx.lifecycle.LifecycleRegistry
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.pedro.schwarz.goalstracker.data.getCategories
-import com.pedro.schwarz.goalstracker.data.getPriorities
-import com.pedro.schwarz.goalstracker.databinding.ItemGoalBinding
-import com.pedro.schwarz.goalstracker.model.Category
-import com.pedro.schwarz.goalstracker.model.Goal
-import com.pedro.schwarz.goalstracker.model.Priority
-import com.pedro.schwarz.goalstracker.ui.databinding.GoalData
+import com.pedro.schwarz.goalstracker.databinding.ItemMilestoneBinding
+import com.pedro.schwarz.goalstracker.model.Milestone
+import com.pedro.schwarz.goalstracker.ui.databinding.MilestoneData
 
 private const val SET_LIFECYCLE = 1
 private const val UNSET_LIFECYCLE = 2
 
-class GoalAdapter(var onItemClick: (goal: Goal) -> Unit = {}) :
-    ListAdapter<Goal, GoalAdapter.ViewHolder>(GoalDiffCallback) {
+class MilestoneAdapter(var onItemClick: (milestone: Milestone, toggle: Boolean) -> Unit = { _, _ -> }) :
+    ListAdapter<Milestone, MilestoneAdapter.ViewHolder>(MilestoneDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val viewBinding = ItemGoalBinding.inflate(inflater, parent, false)
+        val viewBinding = ItemMilestoneBinding.inflate(inflater, parent, false)
         return ViewHolder(viewBinding).also { holder ->
             viewBinding.lifecycleOwner = holder
         }
@@ -46,42 +42,33 @@ class GoalAdapter(var onItemClick: (goal: Goal) -> Unit = {}) :
         holder.changeLifeCycleState(UNSET_LIFECYCLE)
     }
 
-    inner class ViewHolder(private val viewBinding: ItemGoalBinding) :
+    inner class ViewHolder(private val viewBinding: ItemMilestoneBinding) :
         RecyclerView.ViewHolder(viewBinding.root), LifecycleOwner {
 
-        private val registry = LifecycleRegistry(this)
+        private val registry: LifecycleRegistry = LifecycleRegistry(this)
 
-        private lateinit var goal: Goal
+        private lateinit var milestone: Milestone
 
         init {
             registry.currentState = State.INITIALIZED
             viewBinding.onItemClick = View.OnClickListener {
-                onItemClick(goal)
+                onItemClick(milestone, false)
+            }
+            viewBinding.onCheck = View.OnClickListener {
+                onItemClick(milestone, true)
             }
         }
 
-        fun bind(goal: Goal) {
-            this.goal = goal
+        fun bind(item: Milestone) {
+            this.milestone = item
             setContent()
         }
 
         private fun setContent() {
-            if (::goal.isInitialized) {
-                viewBinding.goal = GoalData(goal = goal)
-                getCategory(goal)?.let {
-                    viewBinding.category = it
-                }
-                getPriority(goal)?.let {
-                    viewBinding.priority = it
-                }
+            if (::milestone.isInitialized) {
+                viewBinding.milestone = MilestoneData(milestone = milestone)
             }
         }
-
-        private fun getCategory(goal: Goal): Category? =
-            getCategories().find { category -> category.id == goal.categoryId }
-
-        private fun getPriority(goal: Goal): Priority? =
-            getPriorities().find { priority -> priority.id == goal.priorityId }
 
         fun changeLifeCycleState(state: Int) {
             when (state) {
@@ -98,8 +85,10 @@ class GoalAdapter(var onItemClick: (goal: Goal) -> Unit = {}) :
     }
 }
 
-object GoalDiffCallback : DiffUtil.ItemCallback<Goal>() {
-    override fun areItemsTheSame(oldItem: Goal, newItem: Goal): Boolean = oldItem.id == newItem.id
+object MilestoneDiffCallback : DiffUtil.ItemCallback<Milestone>() {
+    override fun areItemsTheSame(oldItem: Milestone, newItem: Milestone): Boolean =
+        oldItem.id == newItem.id
 
-    override fun areContentsTheSame(oldItem: Goal, newItem: Goal): Boolean = oldItem == newItem
+    override fun areContentsTheSame(oldItem: Milestone, newItem: Milestone): Boolean =
+        oldItem == newItem
 }

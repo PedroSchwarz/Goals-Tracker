@@ -3,7 +3,6 @@ package com.pedro.schwarz.goalstracker.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseAuth
 import com.pedro.schwarz.goalstracker.model.Goal
 import com.pedro.schwarz.goalstracker.repository.GoalRepository
 import com.pedro.schwarz.goalstracker.repository.Resource
@@ -24,17 +23,13 @@ class GoalFormViewModel(private val goalRepository: GoalRepository) : ViewModel(
 
     fun saveGoal(goal: Goal): LiveData<Resource<Unit>> {
         return if (goal.id > 0L) goalRepository.updateGoal(goal, job)
-        else goalRepository.insertGoal(goal.copy(userId = auth.currentUser!!.uid), job)
+        else goalRepository.insertGoal(goal, job)
     }
 
-    fun fetchGoal(goalId: Long) = goalRepository.fetchGoal(goalId, auth.currentUser!!.uid)
+    fun fetchGoal(goalId: Long) = goalRepository.fetchGoal(goalId)
 
     override fun onCleared() {
         super.onCleared()
         job.cancel()
-    }
-
-    companion object {
-        private val auth = FirebaseAuth.getInstance()
     }
 }

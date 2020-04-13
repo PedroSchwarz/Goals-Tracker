@@ -5,12 +5,26 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="goal"
             type="com.pedro.schwarz.goalstracker.ui.databinding.GoalData" />
 
         <variable
+            name="viewModel"
+            type="com.pedro.schwarz.goalstracker.ui.viewmodel.GoalDetailsViewModel" />
+
+        <variable
+            name="onToggleMenu"
+            type="android.view.View.OnClickListener" />
+
+        <variable
             name="onEditGoal"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="onShowMilestoneSheet"
             type="android.view.View.OnClickListener" />
     </data>
 
@@ -161,33 +175,92 @@
             app:milestones="@{goal.milestones}"
             tools:text="0/0" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/goal_details_milestones_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            tools:visibility="gone" />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/goal_details_add_milestone_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:clickable="true"
-            android:focusable="true"
-            app:backgroundTint="@color/colorAccent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/goal_details_edit_btn"
+            android:layout_marginBottom="8dp"
+            android:clickable="@{viewModel.hide ? false : true}"
+            android:focusable="@{viewModel.hide ? false : true}"
+            android:onClick="@{onShowMilestoneSheet}"
+            app:backgroundTint="@color/colorPrimary"
+            app:fabSize="mini"
+            app:hide="@{viewModel.hide}"
+            app:layout_constraintBottom_toTopOf="@+id/goal_details_menu_btn"
+            app:layout_constraintEnd_toEndOf="@+id/goal_details_menu_btn"
             app:srcCompat="@drawable/ic_add_milestone"
             app:tint="@color/colorLight" />
 
+        <TextView
+            android:id="@+id/goal_details_add_milestone_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/fab_label_background"
+            android:elevation="8dp"
+            android:text="Add milestone"
+            android:textColor="@color/colorLight"
+            android:visibility="@{viewModel.hide ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/goal_details_add_milestone_btn"
+            app:layout_constraintEnd_toStartOf="@+id/goal_details_add_milestone_btn"
+            app:layout_constraintTop_toTopOf="@+id/goal_details_add_milestone_btn" />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/goal_details_edit_btn"
+            android:id="@+id/goal_details_edit_goal_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:clickable="@{viewModel.hide ? false : true}"
+            android:focusable="@{viewModel.hide ? false : true}"
+            android:onClick="@{onEditGoal}"
+            app:backgroundTint="@color/colorPrimary"
+            app:fabSize="mini"
+            app:hide="@{viewModel.hide}"
+            app:layout_constraintBottom_toTopOf="@+id/goal_details_add_milestone_btn"
+            app:layout_constraintEnd_toEndOf="@+id/goal_details_add_milestone_btn"
+            app:srcCompat="@drawable/ic_edit"
+            app:tint="@color/colorLight" />
+
+        <TextView
+            android:id="@+id/goal_details_edit_goal_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/fab_label_background"
+            android:elevation="8dp"
+            android:text="Edit goal"
+            android:textColor="@color/colorLight"
+            android:visibility="@{viewModel.hide ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/goal_details_edit_goal_btn"
+            app:layout_constraintEnd_toStartOf="@+id/goal_details_edit_goal_btn"
+            app:layout_constraintTop_toTopOf="@+id/goal_details_edit_goal_btn" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/goal_details_menu_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="@{onEditGoal}"
-            app:backgroundTint="@color/colorPrimary"
-            app:fabSize="mini"
-            app:layout_constraintBottom_toTopOf="@+id/goal_details_add_milestone_btn"
+            android:clickable="@{viewModel.scrollDown ? false : true}"
+            android:focusable="@{viewModel.scrollDown ? false : true}"
+            android:onClick="@{onToggleMenu}"
+            app:backgroundTint="@color/colorAccent"
+            app:hide="@{viewModel.hide}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_edit"
+            app:scrollDown="@{viewModel.scrollDown}"
+            app:srcCompat="@drawable/ic_add"
             app:tint="@color/colorLight" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
