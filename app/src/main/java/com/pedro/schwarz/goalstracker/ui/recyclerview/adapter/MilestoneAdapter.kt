@@ -7,8 +7,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Lifecycle.State
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pedro.schwarz.goalstracker.databinding.ItemMilestoneBinding
 import com.pedro.schwarz.goalstracker.model.Milestone
@@ -18,7 +18,7 @@ private const val SET_LIFECYCLE = 1
 private const val UNSET_LIFECYCLE = 2
 
 class MilestoneAdapter(var onItemClick: (milestone: Milestone, toggle: Boolean) -> Unit = { _, _ -> }) :
-    ListAdapter<Milestone, MilestoneAdapter.ViewHolder>(MilestoneDiffCallback) {
+    PagedListAdapter<Milestone, MilestoneAdapter.ViewHolder>(MilestoneDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -42,7 +42,7 @@ class MilestoneAdapter(var onItemClick: (milestone: Milestone, toggle: Boolean) 
         holder.changeLifeCycleState(UNSET_LIFECYCLE)
     }
 
-    fun getItemAtPosition(position: Int) = getItem(position)
+    fun getItemAtPosition(position: Int): Milestone? = getItem(position)
 
     inner class ViewHolder(private val viewBinding: ItemMilestoneBinding) :
         RecyclerView.ViewHolder(viewBinding.root), LifecycleOwner {
@@ -61,9 +61,11 @@ class MilestoneAdapter(var onItemClick: (milestone: Milestone, toggle: Boolean) 
             }
         }
 
-        fun bind(item: Milestone) {
-            this.milestone = item
-            setContent()
+        fun bind(item: Milestone?) {
+            item?.let {
+                this.milestone = item
+                setContent()
+            }
         }
 
         private fun setContent() {

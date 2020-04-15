@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import androidx.recyclerview.widget.RecyclerView
@@ -92,7 +93,7 @@ class GoalDetailsFragment : Fragment() {
     }
 
     private fun fetchMilestones() {
-        viewModel.fetchMilestones(goalId).observe(this, Observer { result ->
+        viewModel.fetchMilestones(goalId).observe(this, Observer { result: PagedList<Milestone> ->
             milestoneAdapter.submitList(result)
             viewModel.setIsEmpty = result.isEmpty()
         })
@@ -242,9 +243,11 @@ class GoalDetailsFragment : Fragment() {
         val itemCallback = ItemCallback()
         itemCallback.onSwipeItem = { position ->
             val milestone = milestoneAdapter.getItemAtPosition(position)
-            showDeleteDialog(requireContext(), onDelete = {
-                showDeleteAction(milestone)
-            }, onCancel = { milestoneAdapter.notifyDataSetChanged() })
+            milestone?.let {
+                showDeleteDialog(requireContext(), onDelete = {
+                    showDeleteAction(milestone)
+                }, onCancel = { milestoneAdapter.notifyDataSetChanged() })
+            }
         }
         ItemTouchHelper(itemCallback).attachToRecyclerView(milestonesList)
     }

@@ -40,7 +40,7 @@ val uiModules = module {
 
 val viewModelModules = module {
     viewModel<AuthViewModel> { AuthViewModel(get()) }
-    viewModel<GoalsViewModel> { GoalsViewModel(get()) }
+    viewModel<GoalsViewModel> { GoalsViewModel(get(), get(), get()) }
     viewModel<GoalFormViewModel> { GoalFormViewModel(get()) }
     viewModel<GoalDetailsViewModel> { GoalDetailsViewModel(get(), get()) }
     viewModel<CheckpointsViewModel> { CheckpointsViewModel(get()) }

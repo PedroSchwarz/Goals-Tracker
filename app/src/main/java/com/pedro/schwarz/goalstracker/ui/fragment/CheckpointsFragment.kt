@@ -8,13 +8,19 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import androidx.recyclerview.widget.RecyclerView
 import com.pedro.schwarz.goalstracker.R
 import com.pedro.schwarz.goalstracker.databinding.CheckpointsFragmentBinding
+import com.pedro.schwarz.goalstracker.model.Checkpoint
+import com.pedro.schwarz.goalstracker.repository.Failure
+import com.pedro.schwarz.goalstracker.ui.action.showDeleteDialog
+import com.pedro.schwarz.goalstracker.ui.action.showDeleteSnackBar
 import com.pedro.schwarz.goalstracker.ui.extensions.setContent
 import com.pedro.schwarz.goalstracker.ui.fragment.extensions.showMessage
 import com.pedro.schwarz.goalstracker.ui.recyclerview.adapter.CheckpointAdapter
+import com.pedro.schwarz.goalstracker.ui.recyclerview.callback.ItemCallback
 import com.pedro.schwarz.goalstracker.ui.viewmodel.CheckpointsViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -94,5 +100,56 @@ class CheckpointsFragment : Fragment() {
     private fun configCheckpointsList(view: View) {
         checkpointsList = view.findViewById(R.id.checkpoints_list)
         checkpointsList.setContent(VERTICAL, checkpointAdapter)
+        configSwipeCallback()
+    }
+
+    private fun configSwipeCallback() {
+        val itemCallback = ItemCallback()
+        itemCallback.onSwipeItem = { position ->
+            val checkpoint = checkpointAdapter.getItemAtPosition(position)
+            checkpoint?.let {
+                showDeleteDialog(requireContext(), onDelete = {
+                    showDeleteAction(checkpoint)
+                }, onCancel = { checkpointAdapter.notifyDataSetChanged() })
+            }
+        }
+        ItemTouchHelper(itemCallback).attachToRecyclerView(checkpointsList)
+    }
+
+    private fun showDeleteAction(checkpoint: Checkpoint) {
+        view?.let {
+            showDeleteSnackBar(requireContext(), it, onDelete = {
+                deleteCheckpoint(checkpoint)
+            }, onCancel = {
+                saveCheckpoint(checkpoint)
+            })
+        }
+    }
+
+    private fun saveCheckpoint(checkpoint: Checkpoint) {
+
+        viewModel.saveCheckpoint(checkpoint)
+            .observe(viewLifecycleOwner, Observer { result ->
+                when (result) {
+                    is Failure -> {
+                        result.error?.let { error ->
+                            showMessage(error)
+                        }
+                    }
+                }
+            })
+    }
+
+    private fun deleteCheckpoint(checkpoint: Checkpoint) {
+        viewModel.deleteCheckpoint(checkpoint)
+            .observe(viewLifecycleOwner, Observer { result ->
+                when (result) {
+                    is Failure -> {
+                        result.error?.let { error ->
+                            showMessage(error)
+                        }
+                    }
+                }
+            })
     }
 }

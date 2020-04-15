@@ -2,6 +2,8 @@ package com.pedro.schwarz.goalstracker.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.PagedList
+import androidx.paging.toLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.pedro.schwarz.goalstracker.database.dao.GoalDAO
 import com.pedro.schwarz.goalstracker.model.Goal
@@ -19,11 +21,14 @@ private const val CHECKPOINT_COLLECTION = "checkpoints"
 private const val PARENT_FIELD = "goalId"
 private const val USER_FIELD = "userId"
 
+private const val PAGED_LIST_SIZE = 10
+
 class GoalRepository(private val goalDAO: GoalDAO) {
 
-    fun fetchGoals(): LiveData<List<Goal>> {
-        return if (auth.currentUser != null) goalDAO.fetchGoals(auth.currentUser!!.uid)
-        else MutableLiveData()
+    fun fetchGoals(): LiveData<PagedList<Goal>> {
+        return if (auth.currentUser != null) {
+            goalDAO.fetchGoals(auth.currentUser!!.uid).toLiveData(pageSize = PAGED_LIST_SIZE)
+        } else MutableLiveData()
     }
 
     fun fetchGoal(goalId: Long) = goalDAO.fetchGoal(goalId, auth.currentUser!!.uid)
@@ -95,6 +100,30 @@ class GoalRepository(private val goalDAO: GoalDAO) {
             USER_FIELD,
             goal.userId
         )
+    }
+
+    fun fetchGoalsNetwork(): LiveData<Resource<Unit>> {
+        val liveData = MutableLiveData<Resource<Unit>>()
+        auth.currentUser?.let { user ->
+            FirestoreService.fetchDocuments<Goal>(
+                GOAL_COLLECTION,
+                USER_FIELD,
+                user.uid,
+                onSuccess = { result ->
+                    CoroutineScope(Dispatchers.IO).launch {
+                                try {
+                                    goalDAO.insertGoal(result)
+                                    liveData.postValue(Success())
+                                } catch (e: IOException) {
+                                    liveData.postValue(Failure(error = e.message))
+                                }
+                    }
+                },
+                onFailure = { error ->
+                    liveData.postValue(Failure(error = error))
+                })
+        }
+        return liveData
     }
 
     companion object {

@@ -3,6 +3,7 @@ package com.pedro.schwarz.goalstracker.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.paging.PagedList
 import com.pedro.schwarz.goalstracker.model.Goal
 import com.pedro.schwarz.goalstracker.model.Milestone
 import com.pedro.schwarz.goalstracker.repository.GoalRepository
@@ -49,7 +50,7 @@ class GoalDetailsViewModel(
 
     fun fetchGoal(goalId: Long) = goalRepository.fetchGoal(goalId)
 
-    fun fetchMilestones(goalId: Long) = milestoneRepository.fetchMilestones(goalId)
+    fun fetchMilestones(goalId: Long): LiveData<PagedList<Milestone>> = milestoneRepository.fetchMilestones(goalId)
 
     fun saveMilestone(
         milestone: Milestone,

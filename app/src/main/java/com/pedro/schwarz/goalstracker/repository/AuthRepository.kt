@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.pedro.schwarz.goalstracker.model.User
+import com.pedro.schwarz.goalstracker.service.AuthService
 import com.pedro.schwarz.goalstracker.service.FirestoreService
 import com.pedro.schwarz.goalstracker.service.StorageService
 
@@ -14,67 +15,50 @@ class AuthRepository {
 
     fun registerUser(user: User): LiveData<Resource<Unit>> {
         val liveData = MutableLiveData<Resource<Unit>>()
-        auth.createUserWithEmailAndPassword(user.email, user.password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    task.result?.let { result ->
-                        result.user?.let { firebaseUser ->
-                            val id = firebaseUser.uid
-                            StorageService.storeImage(
-                                "$IMAGE_PATH/$id",
-                                user.imageUrl,
-                                onComplete = { result ->
-                                    when (result) {
-                                        is Success -> {
-                                            result.data?.let { imageUrl ->
-                                                FirestoreService.insertDocument(
-                                                    USER_COLLECTION,
-                                                    id,
-                                                    user.copy(id = id, imageUrl = imageUrl),
-                                                    onComplete = { result ->
-                                                        liveData.postValue(result)
-                                                    })
-                                            }
-                                        }
-                                        is Failure -> {
-                                            liveData.postValue(Failure(error = result.error))
-                                        }
-                                    }
-                                })
-                        }
-                    }
-                } else {
-                    task.exception?.let { error ->
-                        liveData.postValue(Failure(error = error.message))
-                    }
-                }
-            }
+        AuthService.createUserWithEmailAndPassword(
+            user.email,
+            user.password,
+            onSuccess = { id ->
+                StorageService.storeImage(
+                    "$IMAGE_PATH/$id",
+                    user.imageUrl,
+                    onSuccess = { imageUrl ->
+                        FirestoreService.insertDocument(
+                            USER_COLLECTION,
+                            id,
+                            user.copy(id = id, imageUrl = imageUrl),
+                            onComplete = { result ->
+                                liveData.postValue(result)
+                            })
+                    },
+                    onFailure = { error ->
+                        liveData.postValue(Failure(error = error))
+                    })
+            },
+            onFailure = { error ->
+                liveData.postValue(Failure(error = error))
+            })
         return liveData
     }
 
     fun signInUser(email: String, password: String): LiveData<Resource<Unit>> {
         val liveData = MutableLiveData<Resource<Unit>>()
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    liveData.postValue(Success())
-                } else {
-                    task.exception?.let { error ->
-                        liveData.postValue(Failure(error = error.message))
-                    }
-                }
-            }
+        AuthService.signInUserWithEmailAndPassword(email, password,
+            onSuccess = {
+                liveData.postValue(Success())
+            },
+            onFailure = { error ->
+                liveData.postValue(Failure(error = error))
+            })
         return liveData
     }
 
     fun checkUserState() = MutableLiveData<Resource<Unit>>().also { liveData ->
-        auth.addAuthStateListener { firebaseAuth ->
-            if (firebaseAuth.currentUser != null) {
-                liveData.postValue(Success())
-            } else {
-                liveData.postValue(Failure())
-            }
-        }
+        AuthService.listenUserStateChanges(onSuccess = {
+            liveData.postValue(Success())
+        }, onFailure = {
+            liveData.postValue(Failure())
+        })
     }
 
     fun signOutUser() {

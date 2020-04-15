@@ -5,13 +5,16 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.pedro.schwarz.goalstracker.R
 import com.pedro.schwarz.goalstracker.databinding.GoalsFragmentBinding
 import com.pedro.schwarz.goalstracker.model.Goal
 import com.pedro.schwarz.goalstracker.repository.Failure
+import com.pedro.schwarz.goalstracker.repository.Success
 import com.pedro.schwarz.goalstracker.ui.action.showDeleteDialog
 import com.pedro.schwarz.goalstracker.ui.action.showDeleteSnackBar
 import com.pedro.schwarz.goalstracker.ui.extensions.setContent
@@ -30,6 +33,8 @@ class GoalsFragment : Fragment() {
     private val authViewModel by viewModel<AuthViewModel>()
 
     private val viewModel by viewModel<GoalsViewModel>()
+
+    private lateinit var goalsListRefresh: SwipeRefreshLayout
 
     private lateinit var goalsList: RecyclerView
 
@@ -56,7 +61,7 @@ class GoalsFragment : Fragment() {
     }
 
     private fun fetchGoals() {
-        viewModel.fetchGoals().observe(this, Observer { result ->
+        viewModel.fetchGoals().observe(this, Observer { result: PagedList<Goal> ->
             goalAdapter.submitList(result)
             viewModel.setIsEmpty = result.isEmpty()
         })
@@ -106,18 +111,43 @@ class GoalsFragment : Fragment() {
     }
 
     private fun configGoalsList(view: View) {
+        goalsListRefresh = view.findViewById(R.id.goals_list_refresh)
+        configRefreshListener()
         goalsList = view.findViewById(R.id.goals_list)
         goalsList.setContent(VERTICAL, goalAdapter)
         configSwipeCallback()
+    }
+
+    private fun configRefreshListener() {
+        goalsListRefresh.setOnRefreshListener {
+            viewModel.setIsRefreshing = true
+            fetchGoalsNetwork()
+        }
+    }
+
+    private fun fetchGoalsNetwork() {
+        viewModel.fetchGoalsNetwork().observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
+                is Success -> {
+                    viewModel.fetchGoalsNetworkChildren()
+                }
+                is Failure -> {
+                    result.error?.let { error -> showMessage(error) }
+                }
+            }
+            viewModel.setIsRefreshing = false
+        })
     }
 
     private fun configSwipeCallback() {
         val itemCallback = ItemCallback()
         itemCallback.onSwipeItem = { position ->
             val goal = goalAdapter.getItemAtPosition(position)
-            showDeleteDialog(requireContext(), onDelete = {
-                showDeleteAction(goal)
-            }, onCancel = { goalAdapter.notifyDataSetChanged() })
+            goal?.let {
+                showDeleteDialog(requireContext(), onDelete = {
+                    showDeleteAction(goal)
+                }, onCancel = { goalAdapter.notifyDataSetChanged() })
+            }
         }
         ItemTouchHelper(itemCallback).attachToRecyclerView(goalsList)
     }

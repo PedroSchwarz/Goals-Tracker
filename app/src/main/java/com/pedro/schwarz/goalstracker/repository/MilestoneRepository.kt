@@ -2,6 +2,8 @@ package com.pedro.schwarz.goalstracker.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.PagedList
+import androidx.paging.toLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.pedro.schwarz.goalstracker.database.dao.MilestoneDAO
 import com.pedro.schwarz.goalstracker.model.Milestone
@@ -14,14 +16,17 @@ import java.io.IOException
 
 private const val MILESTONE_COLLECTION = "milestones"
 
+private const val USER_FIELD = "userId"
+
+private const val PAGED_LIST_SIZE = 10
+
 class MilestoneRepository(private val milestoneDAO: MilestoneDAO) {
 
-    fun fetchMilestones(goalId: Long): LiveData<List<Milestone>> {
-        return if (auth.currentUser != null) milestoneDAO.fetchMilestones(
-            goalId,
-            auth.currentUser!!.uid
-        )
-        else MutableLiveData()
+    fun fetchMilestones(goalId: Long): LiveData<PagedList<Milestone>> {
+        return if (auth.currentUser != null) {
+            milestoneDAO.fetchMilestones(goalId, auth.currentUser!!.uid)
+                .toLiveData(pageSize = PAGED_LIST_SIZE)
+        } else MutableLiveData()
     }
 
     fun insertMilestone(milestone: Milestone, job: Job = Job()) =
@@ -77,6 +82,20 @@ class MilestoneRepository(private val milestoneDAO: MilestoneDAO) {
                 }
             }
         }
+
+    fun fetchMilestonesNetwork() {
+        auth.currentUser?.let { user ->
+            FirestoreService.fetchDocuments<Milestone>(
+                MILESTONE_COLLECTION,
+                USER_FIELD,
+                user.uid,
+                onSuccess = { result ->
+                    CoroutineScope(Dispatchers.IO).launch {
+                        milestoneDAO.insertMilestone(result)
+                    }
+                })
+        }
+    }
 
     companion object {
         private val auth = FirebaseAuth.getInstance()

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +18,7 @@ private const val SET_LIFECYCLE = 1
 private const val UNSET_LIFECYCLE = 2
 
 class CheckpointAdapter(var onItemClick: (checkpoint: Checkpoint) -> Unit = {}) :
-    ListAdapter<Checkpoint, CheckpointAdapter.ViewHolder>(CheckpointDiffCallback) {
+    PagedListAdapter<Checkpoint, CheckpointAdapter.ViewHolder>(CheckpointDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -41,6 +42,8 @@ class CheckpointAdapter(var onItemClick: (checkpoint: Checkpoint) -> Unit = {}) 
         holder.changeLifeCycleState(UNSET_LIFECYCLE)
     }
 
+    fun getItemAtPosition(position: Int): Checkpoint? = getItem(position)
+
     inner class ViewHolder(private val viewBinding: ItemCheckpointBinding) :
         RecyclerView.ViewHolder(viewBinding.root), LifecycleOwner {
 
@@ -55,9 +58,11 @@ class CheckpointAdapter(var onItemClick: (checkpoint: Checkpoint) -> Unit = {}) 
             }
         }
 
-        fun bind(item: Checkpoint) {
-            this.checkpoint = item
-            setContent()
+        fun bind(item: Checkpoint?) {
+            item?.let {
+                this.checkpoint = item
+                setContent()
+            }
         }
 
         private fun setContent() {

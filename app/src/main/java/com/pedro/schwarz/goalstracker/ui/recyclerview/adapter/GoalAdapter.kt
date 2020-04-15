@@ -7,8 +7,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Lifecycle.State
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pedro.schwarz.goalstracker.data.getCategories
 import com.pedro.schwarz.goalstracker.data.getPriorities
@@ -22,7 +22,7 @@ private const val SET_LIFECYCLE = 1
 private const val UNSET_LIFECYCLE = 2
 
 class GoalAdapter(var onItemClick: (goal: Goal) -> Unit = {}) :
-    ListAdapter<Goal, GoalAdapter.ViewHolder>(GoalDiffCallback) {
+    PagedListAdapter<Goal, GoalAdapter.ViewHolder>(GoalDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -46,7 +46,7 @@ class GoalAdapter(var onItemClick: (goal: Goal) -> Unit = {}) :
         holder.changeLifeCycleState(UNSET_LIFECYCLE)
     }
 
-    fun getItemAtPosition(position: Int) = getItem(position)
+    fun getItemAtPosition(position: Int): Goal? = getItem(position)
 
     inner class ViewHolder(private val viewBinding: ItemGoalBinding) :
         RecyclerView.ViewHolder(viewBinding.root), LifecycleOwner {
@@ -62,9 +62,11 @@ class GoalAdapter(var onItemClick: (goal: Goal) -> Unit = {}) :
             }
         }
 
-        fun bind(goal: Goal) {
-            this.goal = goal
-            setContent()
+        fun bind(item: Goal?) {
+            item?.let {
+                this.goal = item
+                setContent()
+            }
         }
 
         private fun setContent() {
