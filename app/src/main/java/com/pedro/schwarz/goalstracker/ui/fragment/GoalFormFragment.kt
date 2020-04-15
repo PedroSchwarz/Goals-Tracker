@@ -22,8 +22,11 @@ import com.pedro.schwarz.goalstracker.ui.fragment.extensions.showMessage
 import com.pedro.schwarz.goalstracker.ui.recyclerview.adapter.CategoryAdapter
 import com.pedro.schwarz.goalstracker.ui.recyclerview.adapter.PriorityAdapter
 import com.pedro.schwarz.goalstracker.ui.validator.isEmpty
+import com.pedro.schwarz.goalstracker.ui.viewmodel.AppViewModel
+import com.pedro.schwarz.goalstracker.ui.viewmodel.Components
 import com.pedro.schwarz.goalstracker.ui.viewmodel.GoalFormViewModel
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GoalFormFragment : Fragment() {
@@ -38,6 +41,8 @@ class GoalFormFragment : Fragment() {
 
     private val viewModel by viewModel<GoalFormViewModel>()
 
+    private val appViewModel by sharedViewModel<AppViewModel>()
+
     private lateinit var categoriesList: RecyclerView
 
     private lateinit var prioritiesList: RecyclerView
@@ -49,12 +54,20 @@ class GoalFormFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        if (goalId > 0L) {
-            viewModel.fetchGoal(goalId).observe(this, Observer { result ->
-                goalData.setGoal(result)
-            })
-        }
+        checkGoalId()
         populateLists()
+    }
+
+    private fun checkGoalId() {
+        if (goalId > 0L) {
+            fetchGoal()
+        }
+    }
+
+    private fun fetchGoal() {
+        viewModel.fetchGoal(goalId).observe(this, Observer { result ->
+            goalData.setGoal(result)
+        })
     }
 
     private fun populateLists() {
@@ -91,6 +104,7 @@ class GoalFormFragment : Fragment() {
         configCategoryList(view)
         configPriorityList(view)
         setListsListeners()
+        appViewModel.setComponents = Components(appBar = true)
     }
 
     private fun setListsListeners() {

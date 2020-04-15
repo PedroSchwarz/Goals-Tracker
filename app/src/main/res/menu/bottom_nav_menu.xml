@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/goalsFragment"
+        android:icon="@drawable/ic_goals_in_progress"
+        android:title="In Progress"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/completedGoalsFragment"
+        android:icon="@drawable/ic_goals_completed"
+        android:title="Completed"
+        app:showAsAction="always" />
+</menu>

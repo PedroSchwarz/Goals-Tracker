@@ -25,9 +25,12 @@ private const val PAGED_LIST_SIZE = 10
 
 class GoalRepository(private val goalDAO: GoalDAO) {
 
-    fun fetchGoals(): LiveData<PagedList<Goal>> {
+    fun fetchGoals(completed: Boolean): LiveData<PagedList<Goal>> {
         return if (auth.currentUser != null) {
-            goalDAO.fetchGoals(auth.currentUser!!.uid).toLiveData(pageSize = PAGED_LIST_SIZE)
+            return if (completed) goalDAO.fetchCompletedGoals(auth.currentUser!!.uid)
+                .toLiveData(pageSize = PAGED_LIST_SIZE)
+            else goalDAO.fetchGoals(auth.currentUser!!.uid)
+                .toLiveData(pageSize = PAGED_LIST_SIZE)
         } else MutableLiveData()
     }
 
@@ -111,12 +114,12 @@ class GoalRepository(private val goalDAO: GoalDAO) {
                 user.uid,
                 onSuccess = { result ->
                     CoroutineScope(Dispatchers.IO).launch {
-                                try {
-                                    goalDAO.insertGoal(result)
-                                    liveData.postValue(Success())
-                                } catch (e: IOException) {
-                                    liveData.postValue(Failure(error = e.message))
-                                }
+                        try {
+                            goalDAO.insertGoal(result)
+                            liveData.postValue(Success())
+                        } catch (e: IOException) {
+                            liveData.postValue(Failure(error = e.message))
+                        }
                     }
                 },
                 onFailure = { error ->

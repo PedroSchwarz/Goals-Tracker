@@ -1,6 +1,5 @@
 package com.pedro.schwarz.goalstracker.ui.databinding
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.pedro.schwarz.goalstracker.model.Checkpoint
 

@@ -21,9 +21,12 @@ import com.pedro.schwarz.goalstracker.ui.extensions.setContent
 import com.pedro.schwarz.goalstracker.ui.fragment.extensions.showMessage
 import com.pedro.schwarz.goalstracker.ui.recyclerview.adapter.GoalAdapter
 import com.pedro.schwarz.goalstracker.ui.recyclerview.callback.ItemCallback
+import com.pedro.schwarz.goalstracker.ui.viewmodel.AppViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.AuthViewModel
+import com.pedro.schwarz.goalstracker.ui.viewmodel.Components
 import com.pedro.schwarz.goalstracker.ui.viewmodel.GoalsViewModel
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GoalsFragment : Fragment() {
@@ -33,6 +36,8 @@ class GoalsFragment : Fragment() {
     private val authViewModel by viewModel<AuthViewModel>()
 
     private val viewModel by viewModel<GoalsViewModel>()
+
+    private val appViewModel by sharedViewModel<AppViewModel>()
 
     private lateinit var goalsListRefresh: SwipeRefreshLayout
 
@@ -108,6 +113,7 @@ class GoalsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configGoalsList(view)
+        appViewModel.setComponents = Components(appBar = true, bottomNav = true)
     }
 
     private fun configGoalsList(view: View) {

@@ -21,8 +21,11 @@ import com.pedro.schwarz.goalstracker.ui.extensions.setContent
 import com.pedro.schwarz.goalstracker.ui.fragment.extensions.showMessage
 import com.pedro.schwarz.goalstracker.ui.recyclerview.adapter.CheckpointAdapter
 import com.pedro.schwarz.goalstracker.ui.recyclerview.callback.ItemCallback
+import com.pedro.schwarz.goalstracker.ui.viewmodel.AppViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.CheckpointsViewModel
+import com.pedro.schwarz.goalstracker.ui.viewmodel.Components
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CheckpointsFragment : Fragment() {
@@ -34,6 +37,8 @@ class CheckpointsFragment : Fragment() {
     private val goalId by lazy { arguments.id }
 
     private val viewModel by viewModel<CheckpointsViewModel>()
+
+    private val appViewModel by sharedViewModel<AppViewModel>()
 
     private val checkpointAdapter by inject<CheckpointAdapter>()
 
@@ -95,6 +100,7 @@ class CheckpointsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configCheckpointsList(view)
+        appViewModel.setComponents = Components(appBar = true)
     }
 
     private fun configCheckpointsList(view: View) {

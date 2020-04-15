@@ -18,8 +18,11 @@ import com.pedro.schwarz.goalstracker.ui.fragment.extensions.showMessage
 import com.pedro.schwarz.goalstracker.ui.validator.isEmpty
 import com.pedro.schwarz.goalstracker.ui.validator.isValidEmail
 import com.pedro.schwarz.goalstracker.ui.validator.isValidPassword
+import com.pedro.schwarz.goalstracker.ui.viewmodel.AppViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.AuthViewModel
+import com.pedro.schwarz.goalstracker.ui.viewmodel.Components
 import com.theartofdev.edmodo.cropper.CropImage
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterFragment : Fragment() {
@@ -27,6 +30,8 @@ class RegisterFragment : Fragment() {
     private val controller by lazy { findNavController() }
 
     private val viewModel by viewModel<AuthViewModel>()
+
+    private val appViewModel by sharedViewModel<AppViewModel>()
 
     private val userData by lazy { UserData() }
 
@@ -39,6 +44,11 @@ class RegisterFragment : Fragment() {
         setRegisterBtn(viewBinding)
         setImageBtn(viewBinding)
         return viewBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        appViewModel.setComponents = Components(appBar = true)
     }
 
     private fun setImageBtn(viewBinding: FragmentRegisterBinding) {

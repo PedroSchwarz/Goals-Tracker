@@ -38,7 +38,8 @@ class GoalsViewModel(
             _isRefreshing.value = value
         }
 
-    fun fetchGoals(): LiveData<PagedList<Goal>> = goalRepository.fetchGoals()
+    fun fetchGoals(completed: Boolean = false): LiveData<PagedList<Goal>> =
+        goalRepository.fetchGoals(completed)
 
     fun deleteGoal(goal: Goal) = goalRepository.deleteGoal(goal, job)
 

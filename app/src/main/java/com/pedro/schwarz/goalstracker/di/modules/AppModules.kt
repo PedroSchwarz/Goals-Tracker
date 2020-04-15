@@ -46,4 +46,5 @@ val viewModelModules = module {
     viewModel<CheckpointsViewModel> { CheckpointsViewModel(get()) }
     viewModel<CheckpointFormViewModel> { CheckpointFormViewModel(get()) }
     viewModel<CheckpointDetailsViewModel> { CheckpointDetailsViewModel(get()) }
+    viewModel<AppViewModel> { AppViewModel() }
 }

@@ -31,8 +31,11 @@ import com.pedro.schwarz.goalstracker.ui.recyclerview.adapter.MilestoneAdapter
 import com.pedro.schwarz.goalstracker.ui.recyclerview.callback.ItemCallback
 import com.pedro.schwarz.goalstracker.ui.recyclerview.listener.ScrollListener
 import com.pedro.schwarz.goalstracker.ui.validator.isEmpty
+import com.pedro.schwarz.goalstracker.ui.viewmodel.AppViewModel
+import com.pedro.schwarz.goalstracker.ui.viewmodel.Components
 import com.pedro.schwarz.goalstracker.ui.viewmodel.GoalDetailsViewModel
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GoalDetailsFragment : Fragment() {
@@ -48,6 +51,8 @@ class GoalDetailsFragment : Fragment() {
     private val milestoneData by lazy { MilestoneData(milestone = Milestone(goalId = goalId)) }
 
     private val viewModel by viewModel<GoalDetailsViewModel>()
+
+    private val appViewModel by sharedViewModel<AppViewModel>()
 
     private lateinit var milestonesList: RecyclerView
 
@@ -230,6 +235,7 @@ class GoalDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configMilestonesList(view)
+        appViewModel.setComponents = Components(appBar = true)
     }
 
     private fun configMilestonesList(view: View) {

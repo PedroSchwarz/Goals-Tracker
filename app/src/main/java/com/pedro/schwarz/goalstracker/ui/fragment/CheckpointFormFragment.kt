@@ -35,8 +35,11 @@ import com.pedro.schwarz.goalstracker.ui.action.showAlertDialog
 import com.pedro.schwarz.goalstracker.ui.databinding.CheckpointData
 import com.pedro.schwarz.goalstracker.ui.fragment.extensions.showMessage
 import com.pedro.schwarz.goalstracker.ui.validator.isEmpty
+import com.pedro.schwarz.goalstracker.ui.viewmodel.AppViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.CheckpointFormViewModel
+import com.pedro.schwarz.goalstracker.ui.viewmodel.Components
 import com.theartofdev.edmodo.cropper.CropImage
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 private const val REQUEST_PERMISSION = 1
@@ -52,6 +55,8 @@ class CheckpointFormFragment : Fragment(), OnMapReadyCallback, LocationListener 
     private val goalId by lazy { arguments.id }
 
     private val viewModel by viewModel<CheckpointFormViewModel>()
+
+    private val appViewModel by sharedViewModel<AppViewModel>()
 
     private val checkpointData = CheckpointData()
 
@@ -134,6 +139,7 @@ class CheckpointFormFragment : Fragment(), OnMapReadyCallback, LocationListener 
         super.onViewCreated(view, savedInstanceState)
         checkpointData.setCheckpoint(Checkpoint(goalId = goalId))
         configMap(view, savedInstanceState)
+        appViewModel.setComponents = Components(appBar = true)
     }
 
     private fun configMap(view: View, savedInstanceState: Bundle?) {
