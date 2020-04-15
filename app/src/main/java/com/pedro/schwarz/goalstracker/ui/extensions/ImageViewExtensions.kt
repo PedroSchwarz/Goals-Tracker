@@ -6,7 +6,18 @@ import com.bumptech.glide.Glide
 import com.pedro.schwarz.goalstracker.R
 import de.hdodenhof.circleimageview.CircleImageView
 
-fun CircleImageView.loadImage(imageUrl: String, placeholder: Int = R.drawable.image_placeholder) {
+private const val placeHolderImage = R.drawable.image_placeholder
+
+fun CircleImageView.loadImage(imageUrl: String, placeholder: Int = placeHolderImage) {
+    Glide.with(this)
+        .load(imageUrl)
+        .error(placeholder)
+        .placeholder(placeholder)
+        .centerCrop()
+        .into(this)
+}
+
+fun ImageView.loadImage(imageUrl: String, placeholder: Int = placeHolderImage) {
     Glide.with(this)
         .load(imageUrl)
         .error(placeholder)

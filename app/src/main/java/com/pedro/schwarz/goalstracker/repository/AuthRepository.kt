@@ -1,12 +1,11 @@
 package com.pedro.schwarz.goalstracker.repository
 
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 import com.pedro.schwarz.goalstracker.model.User
+import com.pedro.schwarz.goalstracker.service.FirestoreService
+import com.pedro.schwarz.goalstracker.service.StorageService
 
 private const val USER_COLLECTION = "users"
 private const val IMAGE_PATH = "users_images"
@@ -20,23 +19,28 @@ class AuthRepository {
                 if (task.isSuccessful) {
                     task.result?.let { result ->
                         result.user?.let { firebaseUser ->
-                            val updatedUser = user.copy(id = firebaseUser.uid)
-                            storeUserImage(updatedUser, onComplete = { result ->
-                                when (result) {
-                                    is Success -> {
-                                        result.data?.let { imageUrl ->
-                                            createUser(
-                                                updatedUser.copy(imageUrl = imageUrl),
-                                                onComplete = { result ->
-                                                    liveData.postValue(result)
-                                                })
+                            val id = firebaseUser.uid
+                            StorageService.storeImage(
+                                "$IMAGE_PATH/$id",
+                                user.imageUrl,
+                                onComplete = { result ->
+                                    when (result) {
+                                        is Success -> {
+                                            result.data?.let { imageUrl ->
+                                                FirestoreService.insertDocument(
+                                                    USER_COLLECTION,
+                                                    id,
+                                                    user.copy(id = id, imageUrl = imageUrl),
+                                                    onComplete = { result ->
+                                                        liveData.postValue(result)
+                                                    })
+                                            }
+                                        }
+                                        is Failure -> {
+                                            liveData.postValue(Failure(error = result.error))
                                         }
                                     }
-                                    is Failure -> {
-                                        liveData.postValue(Failure(error = result.error))
-                                    }
-                                }
-                            })
+                                })
                         }
                     }
                 } else {
@@ -46,41 +50,6 @@ class AuthRepository {
                 }
             }
         return liveData
-    }
-
-    private fun storeUserImage(user: User, onComplete: (result: Resource<String>) -> Unit) {
-        val path = storage.reference.child("${IMAGE_PATH}/${user.id}.jpg")
-        val uploadTask = path.putFile(Uri.parse(user.imageUrl))
-        val urlTask = uploadTask.continueWith { task ->
-            if (!task.isSuccessful) {
-                task.exception?.let { error ->
-                    onComplete(Failure(error = error.message))
-                }
-            }
-            path.downloadUrl
-        }
-        urlTask.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                onComplete(Success(data = task.result.toString()))
-            } else {
-                task.exception?.let { error ->
-                    onComplete(Failure(error = error.message))
-                }
-            }
-        }
-    }
-
-    private fun createUser(user: User, onComplete: (result: Resource<Unit>) -> Unit) {
-        database.collection(USER_COLLECTION).document(user.id).set(user)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    onComplete(Success())
-                } else {
-                    task.exception?.let { error ->
-                        onComplete(Failure(error = error.message))
-                    }
-                }
-            }
     }
 
     fun signInUser(email: String, password: String): LiveData<Resource<Unit>> {
@@ -114,7 +83,5 @@ class AuthRepository {
 
     companion object {
         private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-        private val storage: FirebaseStorage = FirebaseStorage.getInstance()
-        private val database: FirebaseFirestore = FirebaseFirestore.getInstance()
     }
 }

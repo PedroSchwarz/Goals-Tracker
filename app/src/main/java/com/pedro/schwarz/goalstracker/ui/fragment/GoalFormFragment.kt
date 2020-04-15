@@ -112,9 +112,6 @@ class GoalFormFragment : Fragment() {
         goalData.title.value?.let { title ->
             if (isEmpty(title)) return false
         }
-        goalData.description.value?.let { description ->
-            if (isEmpty(description)) return false
-        }
         goalData.categoryId.value?.let { id ->
             if (id == 0L) return false
         }
@@ -127,9 +124,12 @@ class GoalFormFragment : Fragment() {
     private fun saveGoal() {
         viewModel.setIsLoading = true
         goalData.toGoal()?.let { goal ->
-            viewModel.saveGoal(goal).observe(viewLifecycleOwner, Observer { result ->
-                onCompleted(result)
-            })
+            val description = if (goal.description.trim().isEmpty()) "No description added."
+            else goal.description
+            viewModel.saveGoal(goal.copy(description = description))
+                .observe(viewLifecycleOwner, Observer { result ->
+                    onCompleted(result)
+                })
         }
     }
 
@@ -168,7 +168,7 @@ class GoalFormFragment : Fragment() {
                 } else {
                     showMessage("Check your fields.")
                 }
-                return true
+                true
             }
             else -> super.onOptionsItemSelected(item)
         }

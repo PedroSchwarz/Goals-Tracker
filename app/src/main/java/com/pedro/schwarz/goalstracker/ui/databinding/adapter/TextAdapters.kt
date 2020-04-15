@@ -1,4 +1,4 @@
-package com.pedro.schwarz.goalstracker.ui.databinding
+package com.pedro.schwarz.goalstracker.ui.databinding.adapter
 
 import android.text.format.DateUtils
 import android.widget.TextView

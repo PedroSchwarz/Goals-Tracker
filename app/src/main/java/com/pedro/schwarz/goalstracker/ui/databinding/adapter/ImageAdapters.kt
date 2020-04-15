@@ -1,4 +1,4 @@
-package com.pedro.schwarz.goalstracker.ui.databinding
+package com.pedro.schwarz.goalstracker.ui.databinding.adapter
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
@@ -8,6 +8,13 @@ import de.hdodenhof.circleimageview.CircleImageView
 
 @BindingAdapter("loadImage")
 fun CircleImageView.loadImage(imageUrl: String?) {
+    imageUrl?.let {
+        loadImage(imageUrl)
+    }
+}
+
+@BindingAdapter("loadImage")
+fun ImageView.loadImage(imageUrl: String?) {
     imageUrl?.let {
         loadImage(imageUrl)
     }

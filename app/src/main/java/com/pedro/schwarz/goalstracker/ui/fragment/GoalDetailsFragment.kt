@@ -103,7 +103,9 @@ class GoalDetailsFragment : Fragment() {
         setViewBindingData(viewBinding)
         setEditGoalBtn(viewBinding)
         setShowMilestoneSheetBtn(viewBinding)
+        setGoToCheckpointsBtn(viewBinding)
         setToggleMenuBtn(viewBinding)
+
         val bottomSheetBinding =
             GoalDetailsMilestoneSheetBinding.inflate(inflater, container, false)
         configBottomSheet(bottomSheetBinding)
@@ -170,6 +172,19 @@ class GoalDetailsFragment : Fragment() {
         }
     }
 
+    private fun setGoToCheckpointsBtn(viewBinding: GoalDetailsFragmentBinding) {
+        viewBinding.onGoToCheckpoints = View.OnClickListener {
+            goToCheckpoints()
+        }
+    }
+
+    private fun goToCheckpoints() {
+        val directions =
+            GoalDetailsFragmentDirections.actionGoalDetailsFragmentToCheckpointsFragment(goalId)
+        controller.navigate(directions)
+        viewModel.setHide = true
+    }
+
     private fun setShowMilestoneSheetBtn(viewBinding: GoalDetailsFragmentBinding) {
         viewBinding.onShowMilestoneSheet = View.OnClickListener {
             milestoneSheet.show()
@@ -186,6 +201,7 @@ class GoalDetailsFragment : Fragment() {
         val directions =
             GoalDetailsFragmentDirections.actionGoalDetailsFragmentToGoalFormFragment(goalId)
         controller.navigate(directions)
+        viewModel.setHide = true
     }
 
     private fun setViewBindingData(viewBinding: GoalDetailsFragmentBinding) {

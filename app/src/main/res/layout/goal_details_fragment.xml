@@ -26,6 +26,10 @@
         <variable
             name="onShowMilestoneSheet"
             type="android.view.View.OnClickListener" />
+
+        <variable
+            name="onGoToCheckpoints"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -208,7 +212,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:background="@drawable/fab_label_background"
-            android:elevation="8dp"
+            android:elevation="5dp"
             android:text="Add milestone"
             android:textColor="@color/colorLight"
             android:visibility="@{viewModel.hide ? View.GONE : View.VISIBLE}"
@@ -238,13 +242,43 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:background="@drawable/fab_label_background"
-            android:elevation="8dp"
+            android:elevation="5dp"
             android:text="Edit goal"
             android:textColor="@color/colorLight"
             android:visibility="@{viewModel.hide ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/goal_details_edit_goal_btn"
             app:layout_constraintEnd_toStartOf="@+id/goal_details_edit_goal_btn"
             app:layout_constraintTop_toTopOf="@+id/goal_details_edit_goal_btn" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/goal_details_checkpoints_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:clickable="@{viewModel.hide ? false : true}"
+            android:focusable="@{viewModel.hide ? false : true}"
+            android:onClick="@{onGoToCheckpoints}"
+            app:backgroundTint="@color/colorPrimary"
+            app:fabSize="mini"
+            app:hide="@{viewModel.hide}"
+            app:layout_constraintBottom_toTopOf="@+id/goal_details_edit_goal_btn"
+            app:layout_constraintEnd_toEndOf="@+id/goal_details_edit_goal_btn"
+            app:srcCompat="@drawable/ic_checkpoints"
+            app:tint="@color/colorLight" />
+
+        <TextView
+            android:id="@+id/goal_details_checkpoints_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/fab_label_background"
+            android:elevation="5dp"
+            android:text="See checkpoints"
+            android:textColor="@color/colorLight"
+            android:visibility="@{viewModel.hide ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/goal_details_checkpoints_btn"
+            app:layout_constraintEnd_toStartOf="@+id/goal_details_checkpoints_btn"
+            app:layout_constraintTop_toTopOf="@+id/goal_details_checkpoints_btn" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/goal_details_menu_btn"
