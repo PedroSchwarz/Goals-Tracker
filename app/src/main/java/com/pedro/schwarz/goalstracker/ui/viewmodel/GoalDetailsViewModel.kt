@@ -37,6 +37,16 @@ class GoalDetailsViewModel(
             _scrollDown.value = value
         }
 
+    private val _isEmpty = MutableLiveData<Boolean>().also { it.value = setIsEmpty }
+
+    val isEmpty: LiveData<Boolean> get() = _isEmpty
+
+    var setIsEmpty: Boolean = false
+        set(value) {
+            field = value
+            _isEmpty.value = value
+        }
+
     fun fetchGoal(goalId: Long) = goalRepository.fetchGoal(goalId)
 
     fun fetchMilestones(goalId: Long) = milestoneRepository.fetchMilestones(goalId)
@@ -44,18 +54,24 @@ class GoalDetailsViewModel(
     fun saveMilestone(
         milestone: Milestone,
         goal: Goal = Goal(),
-        toggle: Boolean = false
+        toggle: Boolean = false,
+        deletion: Boolean = false
     ): LiveData<Resource<Unit>> {
-        return if (milestone.id > 0L) {
-            if (toggle) {
-                goalRepository.updateGoal(
-                    goal.copy(
-                        completedMilestones = getUpdatedMilestones(
-                            milestone.completed,
-                            goal.completedMilestones
-                        )
-                    )
+        return if (milestone.id > 0L && deletion) {
+            val completedMilestones = if (milestone.completed) goal.completedMilestones + 1
+            else goal.completedMilestones
+            goalRepository.updateGoal(
+                goal.copy(
+                    milestones = goal.milestones + 1,
+                    completedMilestones = completedMilestones
                 )
+            )
+            milestoneRepository.insertMilestone(milestone, job)
+        } else if (milestone.id > 0L && !deletion) {
+            if (toggle) {
+                val completedMilestones = if (milestone.completed) goal.completedMilestones + 1
+                else goal.completedMilestones - 1
+                goalRepository.updateGoal(goal.copy(completedMilestones = completedMilestones))
             }
             milestoneRepository.updateMilestone(milestone, job)
         } else {
@@ -64,9 +80,16 @@ class GoalDetailsViewModel(
         }
     }
 
-    private fun getUpdatedMilestones(completed: Boolean, completedMilestones: Int): Int {
-        return if (completed) completedMilestones + 1
-        else completedMilestones - 1
+    fun deleteMilestone(milestone: Milestone, goal: Goal): LiveData<Resource<Unit>> {
+        val completedMilestones = if (milestone.completed) goal.completedMilestones - 1
+        else goal.completedMilestones
+        goalRepository.updateGoal(
+            goal.copy(
+                milestones = goal.milestones - 1,
+                completedMilestones = completedMilestones
+            )
+        )
+        return milestoneRepository.deleteMilestone(milestone, job)
     }
 
     override fun onCleared() {

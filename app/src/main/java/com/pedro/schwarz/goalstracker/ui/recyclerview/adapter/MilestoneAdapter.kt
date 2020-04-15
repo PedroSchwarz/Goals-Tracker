@@ -42,6 +42,8 @@ class MilestoneAdapter(var onItemClick: (milestone: Milestone, toggle: Boolean) 
         holder.changeLifeCycleState(UNSET_LIFECYCLE)
     }
 
+    fun getItemAtPosition(position: Int) = getItem(position)
+
     inner class ViewHolder(private val viewBinding: ItemMilestoneBinding) :
         RecyclerView.ViewHolder(viewBinding.root), LifecycleOwner {
 

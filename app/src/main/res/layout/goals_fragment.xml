@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="viewModel"
+            type="com.pedro.schwarz.goalstracker.ui.viewmodel.GoalsViewModel" />
+
+        <variable
             name="onGoToNewGoal"
             type="android.view.View.OnClickListener" />
     </data>
@@ -14,6 +18,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.fragment.GoalsFragment">
+
+        <include
+            layout="@layout/empty_list_warning"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:isEmpty="@{viewModel.isEmpty}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/goals_list"

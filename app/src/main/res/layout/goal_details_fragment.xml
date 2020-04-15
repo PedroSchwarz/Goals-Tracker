@@ -187,8 +187,17 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5"
-            tools:visibility="gone" />
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <include
+            layout="@layout/empty_list_warning"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:isEmpty="@{viewModel.isEmpty}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/goal_details_milestones" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/goal_details_add_milestone_btn"

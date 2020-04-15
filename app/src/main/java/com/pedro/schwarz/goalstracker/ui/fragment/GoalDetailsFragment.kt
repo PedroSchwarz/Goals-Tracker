@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -18,12 +19,15 @@ import com.pedro.schwarz.goalstracker.model.Milestone
 import com.pedro.schwarz.goalstracker.repository.Failure
 import com.pedro.schwarz.goalstracker.repository.Resource
 import com.pedro.schwarz.goalstracker.repository.Success
+import com.pedro.schwarz.goalstracker.ui.action.showDeleteDialog
+import com.pedro.schwarz.goalstracker.ui.action.showDeleteSnackBar
 import com.pedro.schwarz.goalstracker.ui.constants.SCROLL_DOWN
 import com.pedro.schwarz.goalstracker.ui.databinding.GoalData
 import com.pedro.schwarz.goalstracker.ui.databinding.MilestoneData
 import com.pedro.schwarz.goalstracker.ui.extensions.setContent
 import com.pedro.schwarz.goalstracker.ui.fragment.extensions.showMessage
 import com.pedro.schwarz.goalstracker.ui.recyclerview.adapter.MilestoneAdapter
+import com.pedro.schwarz.goalstracker.ui.recyclerview.callback.ItemCallback
 import com.pedro.schwarz.goalstracker.ui.recyclerview.listener.ScrollListener
 import com.pedro.schwarz.goalstracker.ui.validator.isEmpty
 import com.pedro.schwarz.goalstracker.ui.viewmodel.GoalDetailsViewModel
@@ -74,7 +78,11 @@ class GoalDetailsFragment : Fragment() {
 
     private fun toggleMilestone(milestone: Milestone) {
         goalData.toGoal()?.let { goal ->
-            viewModel.saveMilestone(milestone.copy(completed = !milestone.completed), goal, true)
+            viewModel.saveMilestone(
+                milestone.copy(completed = !milestone.completed),
+                goal,
+                toggle = true
+            )
         }
     }
 
@@ -86,6 +94,7 @@ class GoalDetailsFragment : Fragment() {
     private fun fetchMilestones() {
         viewModel.fetchMilestones(goalId).observe(this, Observer { result ->
             milestoneAdapter.submitList(result)
+            viewModel.setIsEmpty = result.isEmpty()
         })
     }
 
@@ -225,6 +234,62 @@ class GoalDetailsFragment : Fragment() {
     private fun configMilestonesList(view: View) {
         milestonesList = view.findViewById(R.id.goal_details_milestones_list)
         milestonesList.setContent(VERTICAL, milestoneAdapter)
+        configScrollListener()
+        configSwipeCallback()
+    }
+
+    private fun configSwipeCallback() {
+        val itemCallback = ItemCallback()
+        itemCallback.onSwipeItem = { position ->
+            val milestone = milestoneAdapter.getItemAtPosition(position)
+            showDeleteDialog(requireContext(), onDelete = {
+                showDeleteAction(milestone)
+            }, onCancel = { milestoneAdapter.notifyDataSetChanged() })
+        }
+        ItemTouchHelper(itemCallback).attachToRecyclerView(milestonesList)
+    }
+
+    private fun showDeleteAction(milestone: Milestone) {
+        view?.let {
+            showDeleteSnackBar(requireContext(), it, onDelete = {
+                deleteMilestone(milestone)
+            }, onCancel = {
+                saveMilestone(milestone)
+            })
+        }
+    }
+
+    private fun saveMilestone(milestone: Milestone) {
+        goalData.toGoal()?.let { goal ->
+            viewModel.saveMilestone(milestone, goal, deletion = true)
+                .observe(viewLifecycleOwner, Observer { result ->
+                    when (result) {
+                        is Failure -> {
+                            result.error?.let { error ->
+                                showMessage(error)
+                            }
+                        }
+                    }
+                })
+        }
+    }
+
+    private fun deleteMilestone(milestone: Milestone) {
+        goalData.toGoal()?.let { goal ->
+            viewModel.deleteMilestone(milestone, goal)
+                .observe(viewLifecycleOwner, Observer { result ->
+                    when (result) {
+                        is Failure -> {
+                            result.error?.let { error ->
+                                showMessage(error)
+                            }
+                        }
+                    }
+                })
+        }
+    }
+
+    private fun configScrollListener() {
         milestonesList.addOnScrollListener(ScrollListener(onScroll = { scrollDirection ->
             when (scrollDirection) {
                 SCROLL_DOWN -> {

@@ -8,7 +8,6 @@ data class Goal(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val title: String = "",
     val description: String = "",
-    val progress: Double = 0.0,
     val milestones: Int = 0,
     val completedMilestones: Int = 0,
     val targetDate: Long = System.currentTimeMillis(),

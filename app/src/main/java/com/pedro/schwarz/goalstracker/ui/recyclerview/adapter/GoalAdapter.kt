@@ -46,6 +46,8 @@ class GoalAdapter(var onItemClick: (goal: Goal) -> Unit = {}) :
         holder.changeLifeCycleState(UNSET_LIFECYCLE)
     }
 
+    fun getItemAtPosition(position: Int) = getItem(position)
+
     inner class ViewHolder(private val viewBinding: ItemGoalBinding) :
         RecyclerView.ViewHolder(viewBinding.root), LifecycleOwner {
 

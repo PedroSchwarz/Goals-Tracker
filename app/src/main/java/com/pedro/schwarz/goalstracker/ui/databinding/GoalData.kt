@@ -11,9 +11,6 @@ class GoalData(
     val description: MutableLiveData<String> = MutableLiveData<String>().also {
         it.value = goal.description
     },
-    val progress: MutableLiveData<Double> = MutableLiveData<Double>().also {
-        it.value = goal.progress
-    },
     val milestones: MutableLiveData<Int> = MutableLiveData<Int>().also {
         it.value = goal.milestones
     },
@@ -38,7 +35,6 @@ class GoalData(
         this.goal = goal
         this.title.postValue(this.goal.title)
         this.description.postValue(this.goal.description)
-        this.progress.postValue(this.goal.progress)
         this.milestones.postValue(this.goal.milestones)
         this.completedMilestones.postValue(this.goal.completedMilestones)
         this.targetDate.postValue(this.goal.targetDate)
@@ -51,7 +47,6 @@ class GoalData(
         return goal.copy(
             title = this.title.value ?: return null,
             description = this.description.value ?: return null,
-            progress = this.progress.value ?: return null,
             milestones = this.milestones.value ?: return null,
             completedMilestones = this.completedMilestones.value ?: return null,
             targetDate = this.targetDate.value ?: return null,

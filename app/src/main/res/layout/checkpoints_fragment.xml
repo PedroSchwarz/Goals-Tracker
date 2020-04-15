@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="viewModel"
+            type="com.pedro.schwarz.goalstracker.ui.viewmodel.CheckpointsViewModel" />
+
+        <variable
             name="onGoToNewCheckpoint"
             type="android.view.View.OnClickListener" />
     </data>
@@ -19,6 +23,16 @@
             android:id="@+id/checkpoints_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            layout="@layout/empty_list_warning"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:isEmpty="@{viewModel.isEmpty}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

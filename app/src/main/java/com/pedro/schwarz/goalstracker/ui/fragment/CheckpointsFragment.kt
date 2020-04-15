@@ -57,6 +57,7 @@ class CheckpointsFragment : Fragment() {
     private fun fetchCheckpoints() {
         viewModel.fetchCheckpoints(goalId).observe(this, Observer { result ->
             checkpointAdapter.submitList(result)
+            viewModel.setIsEmpty = result.isEmpty()
         })
     }
 
@@ -65,6 +66,8 @@ class CheckpointsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val viewBinding = CheckpointsFragmentBinding.inflate(inflater, container, false)
+        viewBinding.lifecycleOwner = this
+        viewBinding.viewModel = viewModel
         setOnGoToNewCheckpointBtn(viewBinding)
         return viewBinding.root
     }
