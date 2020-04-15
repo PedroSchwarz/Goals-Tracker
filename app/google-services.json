@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "769538958392",
+    "firebase_url": "https://goals-tracker-c2159.firebaseio.com",
+    "project_id": "goals-tracker-c2159",
+    "storage_bucket": "goals-tracker-c2159.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:769538958392:android:10aa644d5a0c6ff87d32cd",
+        "android_client_info": {
+          "package_name": "com.pedro.schwarz.goalstracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "769538958392-05kgl8rv0notpi5vrmudd6pm8mvmdh4q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0cAupCupdyGhXHUr_5HPmBULalOdeAes"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "769538958392-05kgl8rv0notpi5vrmudd6pm8mvmdh4q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="checkpoint"
+            type="com.pedro.schwarz.goalstracker.ui.databinding.CheckpointData" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".ui.fragment.CheckpointDetailsFragment">
+
+            <ImageView
+                android:id="@+id/checkpoint_details_image"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/checkpoint_image"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image_placeholder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:loadImage="@{checkpoint.imageUrl}" />
+
+            <TextView
+                android:id="@+id/checkpoint_details_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@{checkpoint.description}"
+                android:textColor="@color/colorDark"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkpoint_details_image"
+                tools:text="Checkpoint's description" />
+
+            <TextView
+                android:id="@+id/checkpoint_details_created_at"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:formatDate="@{checkpoint.createdAt}"
+                app:layout_constraintEnd_toEndOf="@+id/checkpoint_details_description"
+                app:layout_constraintStart_toStartOf="@+id/checkpoint_details_description"
+                app:layout_constraintTop_toBottomOf="@+id/checkpoint_details_description"
+                tools:text="Checkpoint's created at" />
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/checkpoint_details_map"
+                android:layout_width="0dp"
+                android:layout_height="250dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkpoint_details_created_at" />
+
+            <TextView
+                android:id="@+id/checkpoint_details_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/checkpoint_details_location_background"
+                android:elevation="5dp"
+                android:text="@{checkpoint.address}"
+                android:textColor="@color/colorLight"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/checkpoint_details_map"
+                app:layout_constraintStart_toStartOf="@+id/checkpoint_details_map"
+                app:layout_constraintTop_toBottomOf="@+id/checkpoint_details_map"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="Checkpoint's location" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="goal"
+            type="com.pedro.schwarz.goalstracker.ui.databinding.GoalData" />
+
+        <variable
+            name="viewModel"
+            type="com.pedro.schwarz.goalstracker.ui.viewmodel.GoalFormViewModel" />
+
+        <variable
+            name="onSelectDate"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".ui.fragment.GoalFormFragment">
+
+            <ProgressBar
+                android:id="@+id/form_goal_progress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:indeterminate="true"
+                android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/form_goal_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:boxBackgroundColor="#00FFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/form_goal_progress"
+                app:validateField="@{goal.title}">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/goal_form_title"
+                    android:inputType="textCapWords"
+                    android:text="@={goal.title}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/form_goal_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:boxBackgroundColor="#00FFFFFF"
+                app:layout_constraintEnd_toEndOf="@+id/form_goal_title"
+                app:layout_constraintStart_toStartOf="@+id/form_goal_title"
+                app:layout_constraintTop_toBottomOf="@+id/form_goal_title">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/goal_form_description"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:lines="4"
+                    android:maxLines="4"
+                    android:text="@={goal.description}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/form_date_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:backgroundTint="@color/colorAccent"
+                android:onClick="@{onSelectDate}"
+                android:text="@string/goal_form_choose_date"
+                app:layout_constraintEnd_toStartOf="@+id/form_date"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="@+id/form_goal_description"
+                app:layout_constraintTop_toBottomOf="@+id/form_goal_description" />
+
+            <TextView
+                android:id="@+id/form_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                app:formatDate="@{goal.targetDate}"
+                app:layout_constraintBottom_toBottomOf="@+id/form_date_btn"
+                app:layout_constraintEnd_toEndOf="@+id/form_goal_description"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/form_date_btn"
+                app:layout_constraintTop_toTopOf="@+id/form_date_btn"
+                tools:text="Target date" />
+
+            <TextView
+                android:id="@+id/form_goal_category_section"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/goal_form_category"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/form_date"
+                app:layout_constraintStart_toStartOf="@+id/form_date_btn"
+                app:layout_constraintTop_toBottomOf="@+id/form_date_btn" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginEnd="8dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toBottomOf="@+id/form_goal_category_indicator"
+                app:layout_constraintEnd_toStartOf="@+id/form_goal_category_indicator"
+                app:layout_constraintStart_toStartOf="@+id/form_goal_category_section"
+                app:layout_constraintTop_toTopOf="@+id/form_goal_category_indicator" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/form_goal_category_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:src="@drawable/ic_close"
+                app:backgroundTint="@color/colorMediumLight"
+                app:fabSize="mini"
+                app:layout_constraintEnd_toEndOf="@+id/form_goal_category_section"
+                app:layout_constraintTop_toBottomOf="@+id/form_goal_category_section"
+                app:loadCategoryContent="@{goal.categoryId}"
+                app:tint="@color/colorLight" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/form_goal_categories_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/form_goal_category_indicator" />
+
+            <TextView
+                android:id="@+id/form_goal_priority_section"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/goal_form_priority"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/form_goal_category_indicator"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/divider"
+                app:layout_constraintTop_toBottomOf="@+id/form_goal_categories_list" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginEnd="8dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toBottomOf="@+id/form_goal_priority_indicator"
+                app:layout_constraintEnd_toStartOf="@+id/form_goal_priority_indicator"
+                app:layout_constraintStart_toStartOf="@+id/form_goal_priority_section"
+                app:layout_constraintTop_toTopOf="@+id/form_goal_priority_indicator" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/form_goal_priority_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:src="@drawable/ic_close"
+                app:backgroundTint="@color/colorMediumLight"
+                app:fabSize="mini"
+                app:layout_constraintEnd_toEndOf="@+id/form_goal_priority_section"
+                app:layout_constraintTop_toBottomOf="@+id/form_goal_priority_section"
+                app:loadPriorityContent="@{goal.priorityId}"
+                app:tint="@color/colorLight" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/form_goal_priorities_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/form_goal_priority_indicator" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>
