@@ -86,7 +86,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Full name"
+                android:hint="@string/register_full_name"
                 android:inputType="textCapWords"
                 android:text="@={user.name}" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -105,7 +105,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email..."
+                android:hint="@string/register_email"
                 android:inputType="textEmailAddress"
                 android:text="@={user.email}" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -125,7 +125,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password..."
+                android:hint="@string/register_password"
                 android:inputType="textPassword"
                 android:text="@={user.password}" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -141,7 +141,7 @@
             android:backgroundTint="@color/colorAccent"
             android:enabled="@{authViewModel.isLoading ? false : true}"
             android:onClick="@{onRegister}"
-            android:text="Register"
+            android:text="@string/register_register"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

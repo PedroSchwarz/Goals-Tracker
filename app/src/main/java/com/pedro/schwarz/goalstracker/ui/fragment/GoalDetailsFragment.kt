@@ -134,7 +134,7 @@ class GoalDetailsFragment : Fragment() {
             if (isFormValid()) {
                 saveMilestone()
             } else {
-                showMessage("Check your field.")
+                showMessage(getString(R.string.invalid_fields))
             }
         }
     }

@@ -59,7 +59,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Title"
+                    android:hint="@string/goal_form_title"
                     android:inputType="textCapWords"
                     android:text="@={goal.title}" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -77,7 +77,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Description"
+                    android:hint="@string/goal_form_description"
                     android:inputType="textMultiLine|textCapSentences"
                     android:lines="4"
                     android:maxLines="4"
@@ -92,7 +92,7 @@
                 android:layout_marginEnd="8dp"
                 android:backgroundTint="@color/colorAccent"
                 android:onClick="@{onSelectDate}"
-                android:text="Choose Date"
+                android:text="@string/goal_form_choose_date"
                 app:layout_constraintEnd_toStartOf="@+id/form_date"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread"
@@ -105,11 +105,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:textAlignment="center"
+                android:textSize="18sp"
                 app:formatDate="@{goal.targetDate}"
-                app:layout_constraintBaseline_toBaselineOf="@+id/form_date_btn"
+                app:layout_constraintBottom_toBottomOf="@+id/form_date_btn"
                 app:layout_constraintEnd_toEndOf="@+id/form_goal_description"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/form_date_btn"
+                app:layout_constraintTop_toTopOf="@+id/form_date_btn"
                 tools:text="Target date" />
 
             <TextView
@@ -117,7 +119,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Category"
+                android:text="@string/goal_form_category"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@+id/form_date"
@@ -162,7 +164,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Priority"
+                android:text="@string/goal_form_priority"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@+id/form_goal_category_indicator"

@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/goalsFragment"
         android:name="com.pedro.schwarz.goalstracker.ui.fragment.GoalsFragment"
-        android:label="Goals"
+        android:label="@string/nav_label_goals"
         tools:layout="@layout/goals_fragment">
         <action
             android:id="@+id/action_goalsFragment_to_goalDetailsFragment"
@@ -28,7 +28,7 @@
     <fragment
         android:id="@+id/goalDetailsFragment"
         android:name="com.pedro.schwarz.goalstracker.ui.fragment.GoalDetailsFragment"
-        android:label="Details"
+        android:label="@string/nav_label_goal_details"
         tools:layout="@layout/goal_details_fragment">
         <action
             android:id="@+id/action_goalDetailsFragment_to_checkpointsFragment"
@@ -55,7 +55,7 @@
     <fragment
         android:id="@+id/goalFormFragment"
         android:name="com.pedro.schwarz.goalstracker.ui.fragment.GoalFormFragment"
-        android:label="Save Goal"
+        android:label="@string/nav_label_save_goal"
         tools:layout="@layout/goal_form_fragment">
         <argument
             android:name="id"
@@ -65,7 +65,7 @@
     <fragment
         android:id="@+id/checkpointsFragment"
         android:name="com.pedro.schwarz.goalstracker.ui.fragment.CheckpointsFragment"
-        android:label="Checkpoints"
+        android:label="@string/nav_label_checkpoints"
         tools:layout="@layout/checkpoints_fragment">
         <argument
             android:name="id"
@@ -103,7 +103,7 @@
     <fragment
         android:id="@+id/checkpointFormFragment"
         android:name="com.pedro.schwarz.goalstracker.ui.fragment.CheckpointFormFragment"
-        android:label="Save checkpoint"
+        android:label="@string/nav_label_save_checkpoint"
         tools:layout="@layout/fragment_checkpoint_form">
         <argument
             android:name="id"
@@ -113,7 +113,7 @@
     <fragment
         android:id="@+id/checkpointDetailsFragment"
         android:name="com.pedro.schwarz.goalstracker.ui.fragment.CheckpointDetailsFragment"
-        android:label="Checkpoint Details"
+        android:label="@string/nav_label_checkpoint_details"
         tools:layout="@layout/fragment_checkpoint_details">
         <argument
             android:name="checkpointId"
@@ -130,12 +130,12 @@
         <fragment
             android:id="@+id/registerFragment"
             android:name="com.pedro.schwarz.goalstracker.ui.fragment.RegisterFragment"
-            android:label="Create an Account"
+            android:label="@string/nav_label_register"
             tools:layout="@layout/fragment_register" />
         <fragment
             android:id="@+id/loginFragment"
             android:name="com.pedro.schwarz.goalstracker.ui.fragment.LoginFragment"
-            android:label="Access your Account"
+            android:label="@string/nav_label_login"
             tools:layout="@layout/fragment_login">
             <action
                 android:id="@+id/action_loginFragment_to_registerFragment"
@@ -149,7 +149,7 @@
     <fragment
         android:id="@+id/completedGoalsFragment"
         android:name="com.pedro.schwarz.goalstracker.ui.fragment.CompletedGoalsFragment"
-        android:label="Completed Goals"
+        android:label="@string/nav_label_completed_goals"
         tools:layout="@layout/fragment_completed_goals" >
         <action
             android:id="@+id/action_completedGoalsFragment_to_goalDetailsFragment"

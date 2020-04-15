@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.pedro.schwarz.goalstracker.R
 import com.pedro.schwarz.goalstracker.databinding.FragmentRegisterBinding
 import com.pedro.schwarz.goalstracker.repository.Failure
 import com.pedro.schwarz.goalstracker.repository.Resource
@@ -62,7 +63,7 @@ class RegisterFragment : Fragment() {
             if (isFormValid()) {
                 registerUser()
             } else {
-                showMessage("Check your fields.")
+                showMessage(getString(R.string.invalid_fields))
             }
         }
     }
@@ -127,7 +128,7 @@ class RegisterFragment : Fragment() {
                 userData.imageUrl.postValue(result.uri.toString())
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 result.error?.let { error ->
-                    showMessage(error.message ?: "Something went wrong.")
+                    showMessage(error.message ?: getString(R.string.generic_error_message))
                 }
             }
         }

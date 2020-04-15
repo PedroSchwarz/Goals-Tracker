@@ -23,6 +23,7 @@
                 android:id="@+id/checkpoint_details_image"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/checkpoint_image"
                 android:scaleType="centerCrop"
                 android:src="@drawable/image_placeholder"
                 app:layout_constraintEnd_toEndOf="parent"

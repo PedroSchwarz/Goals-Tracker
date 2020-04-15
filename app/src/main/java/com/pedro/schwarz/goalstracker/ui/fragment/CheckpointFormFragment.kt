@@ -43,8 +43,6 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 private const val REQUEST_PERMISSION = 1
-private const val PROVIDER_ENABLED_MESSAGE = "Fetching location..."
-private const val PROVIDER_DISABLED_MESSAGE = "Your location won't be updated."
 
 class CheckpointFormFragment : Fragment(), OnMapReadyCallback, LocationListener {
 
@@ -178,7 +176,7 @@ class CheckpointFormFragment : Fragment(), OnMapReadyCallback, LocationListener 
             setLocationOnMap(currentPosition, address)
         } else {
             viewModel.setIsFetchingLocation = false
-            showMessage("Something went wrong. Try again later.")
+            showMessage(getString(R.string.generic_error_message))
         }
     }
 
@@ -189,7 +187,7 @@ class CheckpointFormFragment : Fragment(), OnMapReadyCallback, LocationListener 
         mMap.clear()
         mMap.addMarker(
             MarkerOptions().position(currentPosition).title(address.thoroughfare)
-                .snippet("Your location")
+                .snippet(getString(R.string.location_snippet))
         )
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 18f))
         viewModel.setIsFetchingLocation = false
@@ -202,11 +200,11 @@ class CheckpointFormFragment : Fragment(), OnMapReadyCallback, LocationListener 
     }
 
     override fun onProviderEnabled(provider: String?) {
-        showMessage(PROVIDER_ENABLED_MESSAGE)
+        showMessage(getString(R.string.fetching_location))
     }
 
     override fun onProviderDisabled(provider: String?) {
-        showMessage(PROVIDER_DISABLED_MESSAGE)
+        showMessage(getString(R.string.provider_disabled))
     }
 
     override fun onRequestPermissionsResult(
@@ -243,7 +241,7 @@ class CheckpointFormFragment : Fragment(), OnMapReadyCallback, LocationListener 
     private fun saveCheckpoint() {
         viewModel.setIsSaving = true
         checkpointData.toCheckpoint()?.let { checkpoint ->
-            val address = if (checkpoint.address.trim().isEmpty()) "No location added."
+            val address = if (checkpoint.address.trim().isEmpty()) getString(R.string.no_location)
             else checkpoint.address
             viewModel.saveCheckpoint(checkpoint.copy(address = address))
                 .observe(viewLifecycleOwner, Observer { result ->
@@ -282,7 +280,7 @@ class CheckpointFormFragment : Fragment(), OnMapReadyCallback, LocationListener 
                 checkpointData.imageUrl.postValue(result.uri.toString())
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 result.error?.let { error ->
-                    showMessage(error.message ?: "Something went wrong.")
+                    showMessage(error.message ?: getString(R.string.generic_error_message))
                 }
             }
         }
@@ -299,7 +297,7 @@ class CheckpointFormFragment : Fragment(), OnMapReadyCallback, LocationListener 
                 if (isFormValid()) {
                     saveCheckpoint()
                 } else {
-                    showMessage("Check your fields.")
+                    showMessage(getString(R.string.invalid_fields))
                 }
                 true
             }

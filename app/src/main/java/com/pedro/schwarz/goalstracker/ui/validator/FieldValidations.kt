@@ -1,10 +1,7 @@
 package com.pedro.schwarz.goalstracker.ui.validator
 
 import com.google.android.material.textfield.TextInputLayout
-
-private const val EMPTY_FIELD_ERROR_MESSAGE = "This field cannot be empty."
-private const val INVALID_EMAIL_ERROR_MESSAGE = "Invalid email address."
-private const val INVALID_PASSWORD_ERROR_MESSAGE = "Invalid password, must be longer than 5."
+import com.pedro.schwarz.goalstracker.R
 
 fun isEmpty(value: String): Boolean = value.trim().isEmpty()
 
@@ -14,7 +11,7 @@ fun isValidPassword(value: String): Boolean = value.length > 5
 
 fun setErrorContent(
     field: TextInputLayout,
-    message: String = EMPTY_FIELD_ERROR_MESSAGE
+    message: String = field.context.getString(R.string.field_empty)
 ) {
     field.apply {
         isErrorEnabled = true
@@ -36,7 +33,10 @@ fun validateSimpleText(field: TextInputLayout, value: String) {
 
 fun validateEmail(field: TextInputLayout, value: String) {
     if (isEmpty(value)) setErrorContent(field)
-    else if (!isValidEmail(value)) setErrorContent(field, INVALID_EMAIL_ERROR_MESSAGE)
+    else if (!isValidEmail(value)) setErrorContent(
+        field,
+        field.context.getString(R.string.field_invalid_email)
+    )
     else clearField(field)
 }
 
@@ -44,7 +44,7 @@ fun validatePassword(field: TextInputLayout, value: String) {
     if (isEmpty(value)) setErrorContent(field)
     else if (!isValidPassword(value)) setErrorContent(
         field,
-        INVALID_PASSWORD_ERROR_MESSAGE
+        field.context.getString(R.string.field_invalid_password)
     )
     else clearField(field)
 }

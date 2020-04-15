@@ -4,17 +4,18 @@ import android.app.AlertDialog
 import android.content.Context
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
+import com.pedro.schwarz.goalstracker.R
 
 private const val ACTION_DURATION = 5000
 
 fun showDeleteDialog(context: Context, onDelete: () -> Unit, onCancel: () -> Unit) {
     AlertDialog.Builder(context).apply {
-        setTitle("Delete Goal")
-        setMessage("Are you sure you want to delete this item?")
-        setPositiveButton("YES") { _, _ ->
+        setTitle(context.getString(R.string.dialog_title))
+        setMessage(context.getString(R.string.dialog_message))
+        setPositiveButton(context.getString(R.string.dialog_positive)) { _, _ ->
             onDelete()
         }
-        setNegativeButton("CANCEL") { _, _ ->
+        setNegativeButton(context.getString(R.string.dialog_negative)) { _, _ ->
             onCancel()
         }
         setOnCancelListener {
@@ -29,9 +30,9 @@ fun showDeleteSnackBar(
     onDelete: () -> Unit,
     onCancel: () -> Unit
 ) {
-    Snackbar.make(view, "Item deleted.", Snackbar.LENGTH_INDEFINITE).apply {
+    Snackbar.make(view, context.getString(R.string.snack_title), Snackbar.LENGTH_INDEFINITE).apply {
         duration = ACTION_DURATION as Int
-        setAction("UNDO") {
+        setAction(context.getString(R.string.snack_action)) {
             onCancel()
             dismiss()
         }

@@ -71,8 +71,8 @@ class GoalFormFragment : Fragment() {
     }
 
     private fun populateLists() {
-        categoryAdapter.submitList(getCategories())
-        priorityAdapter.submitList(getPriorities())
+        categoryAdapter.submitList(getCategories(requireContext()))
+        priorityAdapter.submitList(getPriorities(requireContext()))
     }
 
     override fun onCreateView(
@@ -138,8 +138,9 @@ class GoalFormFragment : Fragment() {
     private fun saveGoal() {
         viewModel.setIsLoading = true
         goalData.toGoal()?.let { goal ->
-            val description = if (goal.description.trim().isEmpty()) "No description added."
-            else goal.description
+            val description =
+                if (goal.description.trim().isEmpty()) getString(R.string.no_description)
+                else goal.description
             viewModel.saveGoal(goal.copy(description = description))
                 .observe(viewLifecycleOwner, Observer { result ->
                     onCompleted(result)
@@ -180,7 +181,7 @@ class GoalFormFragment : Fragment() {
                 if (isFormValid()) {
                     saveGoal()
                 } else {
-                    showMessage("Check your fields.")
+                    showMessage(getString(R.string.invalid_fields))
                 }
                 true
             }

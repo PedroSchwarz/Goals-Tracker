@@ -14,6 +14,8 @@ import com.pedro.schwarz.goalstracker.R
 import com.pedro.schwarz.goalstracker.ui.viewmodel.AppViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+private const val TITLE_ARGUMENT_KEY = "title"
+
 class MainActivity : AppCompatActivity() {
 
     private val controller: NavController by lazy {
@@ -37,6 +39,25 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setUIComponents()
+        configTitleDestinationListener()
+        setupActionBarWithNavController(controller, appBarConfiguration)
+        mainBottomNav.setupWithNavController(controller)
+    }
+
+    private fun configTitleDestinationListener() {
+        controller.addOnDestinationChangedListener { _, destination, arguments ->
+            title = destination.label
+            if (destination.id == R.id.goalDetailsFragment) {
+                arguments?.let {
+                    destination.label =
+                        "${it.getString(TITLE_ARGUMENT_KEY)} ${getString(R.string.nav_label_goal_details)}"
+                }
+            }
+        }
+    }
+
+    private fun setUIComponents() {
         appViewModel.components.observe(this, Observer { components ->
             components?.apply {
                 if (appBar) supportActionBar?.show()
@@ -45,16 +66,6 @@ class MainActivity : AppCompatActivity() {
                 else mainBottomNav.visibility = View.GONE
             }
         })
-        controller.addOnDestinationChangedListener { _, destination, arguments ->
-            title = destination.label
-            if (destination.id == R.id.goalDetailsFragment) {
-                arguments?.let {
-                    destination.label = "${it.getString("title")} Details"
-                }
-            }
-        }
-        setupActionBarWithNavController(controller, appBarConfiguration)
-        mainBottomNav.setupWithNavController(controller)
     }
 
     override fun onSupportNavigateUp(): Boolean =

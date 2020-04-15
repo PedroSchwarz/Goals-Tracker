@@ -13,7 +13,7 @@ fun Chip.setProgress(milestones: Int, completedMilestones: Int) {
 
 @BindingAdapter("loadCategoryContent")
 fun Chip.loadCategoryContent(id: Long) {
-    val category = getCategories().find { category -> category.id == id }
+    val category = getCategories(this.context).find { category -> category.id == id }
     category?.let {
         text = category.title
         chipBackgroundColor = ColorStateList.valueOf(resources.getColor(category.color, null))
@@ -23,7 +23,7 @@ fun Chip.loadCategoryContent(id: Long) {
 
 @BindingAdapter("loadPriorityContent")
 fun Chip.loadPriorityContent(id: Long) {
-    val priority = getPriorities().find { priority -> priority.id == id }
+    val priority = getPriorities(this.context).find { priority -> priority.id == id }
     priority?.let {
         text = priority.title
         chipBackgroundColor = ColorStateList.valueOf(resources.getColor(priority.color, null))

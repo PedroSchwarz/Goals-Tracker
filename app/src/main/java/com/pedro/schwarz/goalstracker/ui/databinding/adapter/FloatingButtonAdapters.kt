@@ -11,7 +11,7 @@ import com.pedro.schwarz.goalstracker.data.getPriorities
 
 @BindingAdapter("loadCategoryContent")
 fun FloatingActionButton.loadCategoryContent(id: Long) {
-    val category = getCategories().find { category -> category.id == id }
+    val category = getCategories(this.context).find { category -> category.id == id }
     category?.let {
         supportBackgroundTintList = ColorStateList.valueOf(resources.getColor(category.color, null))
         setImageIcon(Icon.createWithResource(this.context, category.icon))
@@ -20,7 +20,7 @@ fun FloatingActionButton.loadCategoryContent(id: Long) {
 
 @BindingAdapter("loadPriorityContent")
 fun FloatingActionButton.loadPriorityContent(id: Long) {
-    val priority = getPriorities().find { priority -> priority.id == id }
+    val priority = getPriorities(this.context).find { priority -> priority.id == id }
     priority?.let {
         supportBackgroundTintList = ColorStateList.valueOf(resources.getColor(priority.color, null))
         setImageIcon(Icon.createWithResource(this.context, priority.icon))
