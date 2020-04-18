@@ -9,9 +9,9 @@
     <string name="nav_label_checkpoint_details">Detalhes da Marcação</string>
     <string name="nav_label_register">Criar uma Conta</string>
     <string name="nav_label_login">Acessar Conta</string>
-    <string name="nav_label_completed_goals">Objetivos Completados</string>
+    <string name="nav_label_completed_goals">Objetivos Concluídos</string>
     <string name="bottom_nav_progress">Em Progresso</string>
-    <string name="bottom_nav_completed">Completados</string>
+    <string name="bottom_nav_completed">Concluídos</string>
     <string name="checkpoint_save_checkpoint">Salvar marcação</string>
     <string name="goal_save_goal">Salvar objetivo</string>
     <string name="goals_sign_out">Sair</string>
