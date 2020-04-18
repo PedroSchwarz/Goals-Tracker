@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.io.IOException
+import java.util.*
 
 private const val GOAL_COLLECTION = "goals"
 private const val MILESTONE_COLLECTION = "milestones"
@@ -127,6 +128,18 @@ class GoalRepository(private val goalDAO: GoalDAO) {
                 })
         }
         return liveData
+    }
+
+    fun fetchExpiringUncompletedGoals(onCompleted: (goals: List<Goal>) -> Unit) {
+        auth.currentUser?.let { user ->
+            val warningDate = Calendar.getInstance().apply {
+                add(Calendar.DAY_OF_MONTH, 2)
+            }.timeInMillis
+            CoroutineScope(Dispatchers.IO).launch {
+                val goals = goalDAO.fetchExpiringUncompletedGoals(user.uid, warningDate)
+                onCompleted(goals)
+            }
+        }
     }
 
     companion object {
