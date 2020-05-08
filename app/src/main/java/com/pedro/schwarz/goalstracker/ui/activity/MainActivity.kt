@@ -32,7 +32,8 @@ class MainActivity : AppCompatActivity() {
         AppBarConfiguration.Builder(
             R.id.loginFragment,
             R.id.goalsFragment,
-            R.id.completedGoalsFragment
+            R.id.completedGoalsFragment,
+            R.id.profileFragment
         ).build()
     }
 

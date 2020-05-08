@@ -52,7 +52,7 @@
     <string name="invalid_fields">Verifique os campos.</string>
     <string name="generic_error_message">Algo deu errado.</string>
     <string name="no_description">Nenhuma descrição adicionada.</string>
-    <string name="fetching_location">Pegando localização...</string>
+    <string name="fetching_location">Pegando localização…</string>
     <string name="provider_disabled">Sua localização não vai ser atualizada.</string>
     <string name="location_snippet">Sua localização</string>
     <string name="no_location">Nenhuma localização adicionada.</string>
@@ -76,4 +76,7 @@
     <string name="low_label">Baixa</string>
     <string name="medium_label">Média</string>
     <string name="high_label">Alta</string>
+    <string name="bottom_nav_profile">Perfil</string>
+    <string name="nav_label_profile">Perfil</string>
+    <string name="profile_user_avatar_image">Imagem de avatar do usuário</string>
 </resources>

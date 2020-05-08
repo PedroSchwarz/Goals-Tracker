@@ -23,5 +23,7 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
     fun checkUserState() = authRepository.checkUserState()
 
+    fun getUserData() = authRepository.getUserData()
+
     fun signOutUser() = authRepository.signOutUser()
 }

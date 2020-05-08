@@ -7,7 +7,7 @@ import com.pedro.schwarz.goalstracker.di.modules.daoModules
 import com.pedro.schwarz.goalstracker.di.modules.databaseModules
 import com.pedro.schwarz.goalstracker.di.modules.uiModules
 import com.pedro.schwarz.goalstracker.di.modules.viewModelModules
-import com.pedro.schwarz.goalstracker.worker.NotificationWorker
+import com.pedro.schwarz.goalstracker.worker.ExpiringNotificationWorker
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import java.util.concurrent.TimeUnit
@@ -23,7 +23,7 @@ class AppApplication : Application() {
     }
 
     private fun checkExpiringGoals() {
-        val request = PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS).build()
+        val request = PeriodicWorkRequestBuilder<ExpiringNotificationWorker>(1, TimeUnit.DAYS).build()
         WorkManager.getInstance(this).enqueue(request)
     }
 }

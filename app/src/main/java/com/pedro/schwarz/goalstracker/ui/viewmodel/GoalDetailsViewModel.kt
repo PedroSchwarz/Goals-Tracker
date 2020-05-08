@@ -1,5 +1,6 @@
 package com.pedro.schwarz.goalstracker.ui.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -50,7 +51,8 @@ class GoalDetailsViewModel(
 
     fun fetchGoal(goalId: Long) = goalRepository.fetchGoal(goalId)
 
-    fun fetchMilestones(goalId: Long): LiveData<PagedList<Milestone>> = milestoneRepository.fetchMilestones(goalId)
+    fun fetchMilestones(goalId: Long): LiveData<PagedList<Milestone>> =
+        milestoneRepository.fetchMilestones(goalId)
 
     fun saveMilestone(
         milestone: Milestone,
@@ -92,6 +94,9 @@ class GoalDetailsViewModel(
         )
         return milestoneRepository.deleteMilestone(milestone, job)
     }
+
+    fun checkSendCompletingNotification(context: Context, goal: Goal, completed: Boolean) =
+        goalRepository.checkSendCompletingNotification(context, goal, completed)
 
     override fun onCleared() {
         super.onCleared()

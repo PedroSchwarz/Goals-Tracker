@@ -1,13 +1,18 @@
 package com.pedro.schwarz.goalstracker.repository
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.google.firebase.auth.FirebaseAuth
 import com.pedro.schwarz.goalstracker.database.dao.GoalDAO
 import com.pedro.schwarz.goalstracker.model.Goal
 import com.pedro.schwarz.goalstracker.service.FirestoreService
+import com.pedro.schwarz.goalstracker.worker.CompletingNotificationWorker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -21,6 +26,8 @@ private const val CHECKPOINT_COLLECTION = "checkpoints"
 
 private const val PARENT_FIELD = "goalId"
 private const val USER_FIELD = "userId"
+
+private const val GOAL_TITLE_KEY = "goalTitle"
 
 private const val PAGED_LIST_SIZE = 10
 
@@ -139,6 +146,18 @@ class GoalRepository(private val goalDAO: GoalDAO) {
                 val goals = goalDAO.fetchExpiringUncompletedGoals(user.uid, warningDate)
                 onCompleted(goals)
             }
+        }
+    }
+
+    fun checkSendCompletingNotification(context: Context, goal: Goal, completed: Boolean) {
+        val completedMilestones = if (completed) goal.completedMilestones + 1
+        else goal.completedMilestones - 1
+        if (goal.milestones > 5 && completedMilestones == goal.milestones - 1) {
+            val goalData = workDataOf(GOAL_TITLE_KEY to goal.title)
+            val request = OneTimeWorkRequestBuilder<CompletingNotificationWorker>()
+                .setInputData(goalData)
+                .build()
+            WorkManager.getInstance(context).enqueue(request)
         }
     }
 
