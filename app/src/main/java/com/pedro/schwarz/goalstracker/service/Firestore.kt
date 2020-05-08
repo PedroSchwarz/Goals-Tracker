@@ -4,10 +4,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.pedro.schwarz.goalstracker.model.Checkpoint
 import com.pedro.schwarz.goalstracker.model.Goal
 import com.pedro.schwarz.goalstracker.model.Milestone
+import com.pedro.schwarz.goalstracker.model.User
 import com.pedro.schwarz.goalstracker.repository.Failure
 import com.pedro.schwarz.goalstracker.repository.Resource
 import com.pedro.schwarz.goalstracker.repository.Success
 
+private const val USER_COLLECTION = "users"
 private const val GOAL_COLLECTION = "goals"
 private const val MILESTONE_COLLECTION = "milestones"
 private const val CHECKPOINT_COLLECTION = "checkpoints"
@@ -16,6 +18,34 @@ private const val IMAGE_PATH = "checkpoints_images"
 class FirestoreService {
     companion object {
         private val database = FirebaseFirestore.getInstance()
+
+        fun <T> fetchDocument(
+            collection: String,
+            document: String,
+            onSuccess: (result: T) -> Unit,
+            onFailure: (error: String) -> Unit = {}
+        ) {
+            database.collection(collection).document(document).get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        task.result?.let { result ->
+                            val item = when (collection) {
+                                USER_COLLECTION -> result.toObject(User::class.java) as T
+                                GOAL_COLLECTION -> result.toObject(Goal::class.java) as T
+                                MILESTONE_COLLECTION -> result.toObject(Milestone::class.java) as T
+                                else -> result.toObject(Checkpoint::class.java) as T
+                            }
+                            onSuccess(item)
+                        }
+                    } else {
+                        task.exception?.let { error ->
+                            error.message?.let { message ->
+                                onFailure(message)
+                            }
+                        }
+                    }
+                }
+        }
 
         fun <T> fetchDocuments(
             collection: String,

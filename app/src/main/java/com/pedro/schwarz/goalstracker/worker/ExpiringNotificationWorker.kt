@@ -1,19 +1,15 @@
 package com.pedro.schwarz.goalstracker.worker
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Context
-import android.os.Build
-import androidx.core.app.NotificationCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.pedro.schwarz.goalstracker.R
 import com.pedro.schwarz.goalstracker.repository.GoalRepository
 import com.pedro.schwarz.goalstracker.service.showNotification
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class NotificationWorker(context: Context, params: WorkerParameters) : Worker(context, params),
+class ExpiringNotificationWorker(context: Context, params: WorkerParameters) :
+    Worker(context, params),
     KoinComponent {
 
     override fun doWork(): Result {

@@ -6,10 +6,15 @@
         android:id="@+id/goalsFragment"
         android:icon="@drawable/ic_goals_in_progress"
         android:title="@string/bottom_nav_progress"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/completedGoalsFragment"
         android:icon="@drawable/ic_goals_completed"
         android:title="@string/bottom_nav_completed"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_person"
+        android:title="@string/bottom_nav_profile"
+        app:showAsAction="ifRoom" />
 </menu>

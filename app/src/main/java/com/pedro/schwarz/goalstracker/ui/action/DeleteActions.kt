@@ -3,10 +3,9 @@ package com.pedro.schwarz.goalstracker.ui.action
 import android.app.AlertDialog
 import android.content.Context
 import android.view.View
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.pedro.schwarz.goalstracker.R
-
-private const val ACTION_DURATION = 5000
 
 fun showDeleteDialog(context: Context, onDelete: () -> Unit, onCancel: () -> Unit) {
     AlertDialog.Builder(context).apply {
@@ -31,7 +30,7 @@ fun showDeleteSnackBar(
     onCancel: () -> Unit
 ) {
     Snackbar.make(view, context.getString(R.string.snack_title), Snackbar.LENGTH_INDEFINITE).apply {
-        duration = ACTION_DURATION as Int
+        duration = BaseTransientBottomBar.LENGTH_LONG
         setAction(context.getString(R.string.snack_action)) {
             onCancel()
             dismiss()

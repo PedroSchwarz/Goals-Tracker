@@ -16,6 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.pedro.schwarz.goalstracker.R
 import com.pedro.schwarz.goalstracker.databinding.GoalDetailsFragmentBinding
 import com.pedro.schwarz.goalstracker.databinding.GoalDetailsMilestoneSheetBinding
+import com.pedro.schwarz.goalstracker.model.Goal
 import com.pedro.schwarz.goalstracker.model.Milestone
 import com.pedro.schwarz.goalstracker.repository.Failure
 import com.pedro.schwarz.goalstracker.repository.Resource
@@ -65,10 +66,10 @@ class GoalDetailsFragment : Fragment() {
         fetchGoal()
         fetchMilestones()
         configMilestoneItemClick()
-        initOptionBtns()
+        initOptionButtons()
     }
 
-    private fun initOptionBtns() {
+    private fun initOptionButtons() {
         viewModel.setHide = true
     }
 
@@ -89,7 +90,12 @@ class GoalDetailsFragment : Fragment() {
                 goal,
                 toggle = true
             )
+            checkSendCompletingNotification(goal, !milestone.completed)
         }
+    }
+
+    private fun checkSendCompletingNotification(goal: Goal, completed: Boolean) {
+        viewModel.checkSendCompletingNotification(requireContext(), goal, completed)
     }
 
     private fun populateSheet(milestone: Milestone) {

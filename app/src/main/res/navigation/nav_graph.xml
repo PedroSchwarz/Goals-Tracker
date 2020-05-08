@@ -159,4 +159,9 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.pedro.schwarz.goalstracker.ui.fragment.ProfileFragment"
+        android:label="@string/nav_label_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
