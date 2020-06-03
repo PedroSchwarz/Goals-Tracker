@@ -79,4 +79,16 @@
     <string name="bottom_nav_profile">Perfil</string>
     <string name="nav_label_profile">Perfil</string>
     <string name="profile_user_avatar_image">Imagem de avatar do usuário</string>
+    <string name="image_required_alert">Por favor, escolha uma imagem para usar no perfil.</string>
+    <string name="goal_almost_complete_title">Objetivo Quase Concluído</string>
+    <string name="goal_almost_complete_description">Parabéns!</string>
+    <string name="goal_almost_complete_long_description_start">Seu objetivo</string>
+    <string name="goal_almost_complete_long_description_end">está quase concluído! Continue assim!</string>
+    <string name="goal_expiring_title">Objetivo Atingindo Data Final</string>
+    <string name="goal_expiring_description">Alerta sobre</string>
+    <string name="goal_expiring_long_description_start">Seu objetivo</string>
+    <string name="goal_expiring_long_description_end">está prestes a atingir a data final e ainda não foi concluído!</string>
+    <string name="splash_from">Desenvolvido Por</string>
+    <string name="splash_pedro_schwarz">Pedro Schwarz Rodrigues</string>
+    <string name="splash_loading">Carregando...</string>
 </resources>

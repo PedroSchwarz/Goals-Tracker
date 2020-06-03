@@ -27,13 +27,16 @@ fun showDeleteSnackBar(
     context: Context,
     view: View,
     onDelete: () -> Unit,
-    onCancel: () -> Unit
+    onCancel: () -> Unit = {},
+    undo: Boolean = true
 ) {
     Snackbar.make(view, context.getString(R.string.snack_title), Snackbar.LENGTH_INDEFINITE).apply {
         duration = BaseTransientBottomBar.LENGTH_LONG
-        setAction(context.getString(R.string.snack_action)) {
-            onCancel()
-            dismiss()
+        if (undo) {
+            setAction(context.getString(R.string.snack_action)) {
+                onCancel()
+                dismiss()
+            }
         }
     }.show()
     onDelete()

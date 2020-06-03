@@ -33,19 +33,6 @@ class LoginFragment : Fragment() {
 
     private val userData by lazy { UserData() }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        checkUserState()
-    }
-
-    private fun checkUserState() {
-        viewModel.checkUserState().observe(this, Observer { result ->
-            when (result) {
-                is Success -> goToGoal()
-            }
-        })
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

@@ -7,12 +7,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import androidx.recyclerview.widget.RecyclerView
 import com.pedro.schwarz.goalstracker.R
 import com.pedro.schwarz.goalstracker.databinding.FragmentCompletedGoalsBinding
+import com.pedro.schwarz.goalstracker.model.Goal
+import com.pedro.schwarz.goalstracker.repository.Failure
+import com.pedro.schwarz.goalstracker.ui.action.showDeleteDialog
+import com.pedro.schwarz.goalstracker.ui.action.showDeleteSnackBar
 import com.pedro.schwarz.goalstracker.ui.extensions.setContent
+import com.pedro.schwarz.goalstracker.ui.fragment.extensions.showMessage
 import com.pedro.schwarz.goalstracker.ui.recyclerview.adapter.GoalAdapter
+import com.pedro.schwarz.goalstracker.ui.recyclerview.callback.ItemCallback
 import com.pedro.schwarz.goalstracker.ui.viewmodel.AppViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.Components
 import com.pedro.schwarz.goalstracker.ui.viewmodel.GoalsViewModel
@@ -80,5 +87,40 @@ class CompletedGoalsFragment : Fragment() {
     private fun configGoalsList(view: View) {
         completedGoalsList = view.findViewById(R.id.completed_goals_list)
         completedGoalsList.setContent(VERTICAL, goalAdapter)
+        configSwipeCallback()
+    }
+
+    private fun configSwipeCallback() {
+        val itemCallback = ItemCallback()
+        itemCallback.onSwipeItem = { position ->
+            val goal = goalAdapter.getItemAtPosition(position)
+            goal?.let {
+                showDeleteDialog(requireContext(), onDelete = {
+                    showDeleteAction(goal)
+                }, onCancel = { goalAdapter.notifyDataSetChanged() })
+            }
+        }
+        ItemTouchHelper(itemCallback).attachToRecyclerView(completedGoalsList)
+    }
+
+    private fun showDeleteAction(goal: Goal) {
+        view?.let {
+            showDeleteSnackBar(requireContext(), it, onDelete = {
+                deleteGoal(goal)
+            }, undo = false)
+        }
+    }
+
+
+    private fun deleteGoal(goal: Goal) {
+        viewModel.deleteGoal(goal).observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
+                is Failure -> {
+                    result.error?.let { error ->
+                        showMessage(error)
+                    }
+                }
+            }
+        })
     }
 }

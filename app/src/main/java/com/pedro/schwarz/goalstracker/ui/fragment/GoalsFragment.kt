@@ -48,7 +48,6 @@ class GoalsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        checkUserState()
         fetchGoals()
         configGoalItemClick()
     }
@@ -70,21 +69,6 @@ class GoalsFragment : Fragment() {
             goalAdapter.submitList(result)
             viewModel.setIsEmpty = result.isEmpty()
         })
-    }
-
-    private fun checkUserState() {
-        authViewModel.checkUserState().observe(this, Observer { result ->
-            when (result) {
-                is Failure -> {
-                    goToLogin()
-                }
-            }
-        })
-    }
-
-    private fun goToLogin() {
-        val directions = GoalsFragmentDirections.actionGlobalLoginFragment()
-        controller.navigate(directions)
     }
 
     override fun onCreateView(
@@ -195,6 +179,13 @@ class GoalsFragment : Fragment() {
 
     private fun signOutUser() {
         authViewModel.signOutUser()
+        goToLogin()
+    }
+
+
+    private fun goToLogin() {
+        val directions = GoalsFragmentDirections.actionGlobalLoginFragment()
+        controller.navigate(directions)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

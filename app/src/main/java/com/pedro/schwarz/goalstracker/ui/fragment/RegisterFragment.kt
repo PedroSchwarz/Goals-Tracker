@@ -1,7 +1,9 @@
 package com.pedro.schwarz.goalstracker.ui.fragment
 
+import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +16,7 @@ import com.pedro.schwarz.goalstracker.databinding.FragmentRegisterBinding
 import com.pedro.schwarz.goalstracker.repository.Failure
 import com.pedro.schwarz.goalstracker.repository.Resource
 import com.pedro.schwarz.goalstracker.repository.Success
+import com.pedro.schwarz.goalstracker.ui.action.showAlertDialog
 import com.pedro.schwarz.goalstracker.ui.databinding.UserData
 import com.pedro.schwarz.goalstracker.ui.fragment.extensions.showMessage
 import com.pedro.schwarz.goalstracker.ui.validator.isEmpty
@@ -26,6 +29,8 @@ import com.theartofdev.edmodo.cropper.CropImage
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+private const val REQUEST_PERMISSION = 1
+
 class RegisterFragment : Fragment() {
 
     private val controller by lazy { findNavController() }
@@ -35,6 +40,26 @@ class RegisterFragment : Fragment() {
     private val appViewModel by sharedViewModel<AppViewModel>()
 
     private val userData by lazy { UserData() }
+
+    private val permissions = arrayOf(
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        getPermissions()
+    }
+
+    private fun getPermissions() {
+        com.pedro.schwarz.goalstracker.service.getPermissions(
+            permissions,
+            requireContext(),
+            onFailure = {
+                requestPermissions(permissions, REQUEST_PERMISSION)
+            })
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,6 +85,9 @@ class RegisterFragment : Fragment() {
 
     private fun setRegisterBtn(viewBinding: FragmentRegisterBinding) {
         viewBinding.onRegister = View.OnClickListener {
+            if (userData.imageUrl.value == null) {
+                showMessage(getString(R.string.image_required_alert))
+            }
             if (isFormValid()) {
                 registerUser()
             } else {
@@ -118,6 +146,27 @@ class RegisterFragment : Fragment() {
             if (isEmpty(password) || !isValidPassword(password)) return false
         }
         return true
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == REQUEST_PERMISSION) {
+            for (result in grantResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    showPermissionsDialog()
+                    return
+                }
+            }
+        }
+    }
+
+    private fun showPermissionsDialog() {
+        showAlertDialog(requireContext(), onClose = {
+            controller.popBackStack()
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
