@@ -81,7 +81,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="nav_label_profile">Profile</string>
-    <string name="profile_user_avatar_image">User\'s avatar image</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="image_required_alert">Please choose an profile image.</string>
@@ -95,5 +94,12 @@
     <string name="goal_expiring_long_description_end">\" is about reach it\'s target date and you haven\'t completed it yet!\"</string>
     <string name="splash_from">Developed By</string>
     <string name="splash_pedro_schwarz">Pedro Schwarz Rodrigues</string>
-    <string name="splash_loading">Loading...</string>
+    <string name="splash_loading">Loading…</string>
+    <string name="profile_avatar">Profile avatar</string>
+    <string name="profile_goals_summary">Goals Summary</string>
+    <string name="profile_completed_goals_count">Completed Goals</string>
+    <string name="profile_uncompleted_goals_count">Uncompleted Goals</string>
+    <string name="profile_uncompleted_goals_icon">Uncompleted goals icon</string>
+    <string name="profile_completed_goals_icon">Completed goals icon</string>
+    <string name="goals_tracker_logo">Goals Tracker Logo</string>
 </resources>

@@ -60,13 +60,13 @@ class SplashFragment : Fragment() {
     private fun goToGoal() {
         controller.popBackStack()
         val directions =
-            SplashFragmentDirections.actionGlobalGoalsFragment()
+            SplashFragmentDirections.actionGlobalToMain()
         controller.navigate(directions)
     }
 
     private fun goToLogin() {
         controller.popBackStack()
-        val directions = SplashFragmentDirections.actionGlobalLoginFragment()
+        val directions = SplashFragmentDirections.actionGlobalToAuth()
         controller.navigate(directions)
     }
 }

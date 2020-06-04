@@ -88,7 +88,7 @@ class LoginFragment : Fragment() {
 
     private fun goToGoal() {
         val directions =
-            LoginFragmentDirections.actionGlobalGoalsFragment()
+            LoginFragmentDirections.actionGlobalToMain()
         controller.navigate(directions)
     }
 
@@ -117,7 +117,7 @@ class LoginFragment : Fragment() {
 
     private fun goToRegister() {
         val directions =
-            LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
+            LoginFragmentDirections.actionLoginToRegister()
         controller.navigate(directions)
     }
 }

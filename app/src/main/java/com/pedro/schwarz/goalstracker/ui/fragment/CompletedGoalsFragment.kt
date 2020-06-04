@@ -54,7 +54,7 @@ class CompletedGoalsFragment : Fragment() {
 
     private fun goToDetails(id: Long, title: String) {
         val directions =
-            CompletedGoalsFragmentDirections.actionCompletedGoalsFragmentToGoalDetailsFragment(
+            CompletedGoalsFragmentDirections.actionCompletedGoalsToGoalDetails(
                 id,
                 title
             )

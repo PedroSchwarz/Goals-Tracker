@@ -9,17 +9,26 @@ import androidx.lifecycle.Observer
 import com.pedro.schwarz.goalstracker.databinding.FragmentProfileBinding
 import com.pedro.schwarz.goalstracker.ui.databinding.UserData
 import com.pedro.schwarz.goalstracker.ui.viewmodel.AuthViewModel
+import com.pedro.schwarz.goalstracker.ui.viewmodel.ProfileViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment() {
 
     private val authViewModel by viewModel<AuthViewModel>()
 
+    private val viewModel by viewModel<ProfileViewModel>()
+
     private val userData by lazy { UserData() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fetchUser()
+        viewModel.fetchCompletedGoalsCount().observe(this, Observer { count ->
+            viewModel.setCompletedCount = count
+        })
+        viewModel.fetchUncompletedGoalsCount().observe(this, Observer { count ->
+            viewModel.setUncompletedCount = count
+        })
     }
 
     private fun fetchUser() {
@@ -40,5 +49,6 @@ class ProfileFragment : Fragment() {
     private fun setViewBindingData(viewBinding: FragmentProfileBinding) {
         viewBinding.lifecycleOwner = this
         viewBinding.user = userData
+        viewBinding.viewModel = viewModel
     }
 }

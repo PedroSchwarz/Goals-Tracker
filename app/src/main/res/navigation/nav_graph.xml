@@ -2,11 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
+    android:id="@+id/nav"
     app:startDestination="@id/splashFragment">
 
     <action
-        android:id="@+id/action_global_goalsFragment"
+        android:id="@+id/action_global_to_main"
         app:destination="@id/main_nav"
         app:enterAnim="@anim/slide_in_right"
         app:exitAnim="@anim/slide_out_left"
@@ -15,7 +15,7 @@
         app:popUpTo="@id/auth_nav"
         app:popUpToInclusive="true" />
     <action
-        android:id="@+id/action_global_loginFragment"
+        android:id="@+id/action_global_to_auth"
         app:destination="@id/auth_nav"
         app:popUpTo="@id/main_nav"
         app:popUpToInclusive="true" />
@@ -33,7 +33,7 @@
             android:label="@string/nav_label_login"
             tools:layout="@layout/fragment_login">
             <action
-                android:id="@+id/action_loginFragment_to_registerFragment"
+                android:id="@+id/action_login_to_register"
                 app:destination="@id/registerFragment"
                 app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_out_left"
@@ -48,21 +48,21 @@
         tools:layout="@layout/fragment_splash" />
     <navigation
         android:id="@+id/main_nav"
-        app:startDestination="@id/goalsFragment" >
+        app:startDestination="@id/goalsFragment">
         <fragment
             android:id="@+id/goalsFragment"
             android:name="com.pedro.schwarz.goalstracker.ui.fragment.GoalsFragment"
             android:label="@string/nav_label_goals"
             tools:layout="@layout/goals_fragment">
             <action
-                android:id="@+id/action_goalsFragment_to_goalDetailsFragment"
+                android:id="@+id/action_goals_to_goal_details"
                 app:destination="@id/goalDetailsFragment"
                 app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_out_left"
                 app:popEnterAnim="@anim/slide_in_left"
                 app:popExitAnim="@anim/slide_out_right" />
             <action
-                android:id="@+id/action_goalsFragment_to_goalFormFragment"
+                android:id="@+id/action_goals_to_goal_form"
                 app:destination="@id/goalFormFragment"
                 app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_out_left"
@@ -75,7 +75,7 @@
             android:label="@string/nav_label_completed_goals"
             tools:layout="@layout/fragment_completed_goals">
             <action
-                android:id="@+id/action_completedGoalsFragment_to_goalDetailsFragment"
+                android:id="@+id/action_completed_goals_to_goal_details"
                 app:destination="@id/goalDetailsFragment"
                 app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_out_left"
@@ -93,7 +93,7 @@
             android:label="@string/nav_label_goal_details"
             tools:layout="@layout/goal_details_fragment">
             <action
-                android:id="@+id/action_goalDetailsFragment_to_checkpointsFragment"
+                android:id="@+id/action_goal_details_to_checkpoints"
                 app:destination="@id/checkpointsFragment"
                 app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_out_left"
@@ -107,7 +107,7 @@
                 android:name="title"
                 app:argType="string" />
             <action
-                android:id="@+id/action_goalDetailsFragment_to_goalFormFragment"
+                android:id="@+id/action_goal_details_to_goal_form"
                 app:destination="@id/goalFormFragment"
                 app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_out_left"
@@ -124,14 +124,14 @@
                 android:defaultValue="0L"
                 app:argType="long" />
             <action
-                android:id="@+id/action_checkpointsFragment_to_checkpointFormFragment"
+                android:id="@+id/action_checkpoints_to_checkpoint_form"
                 app:destination="@id/checkpointFormFragment"
                 app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_out_left"
                 app:popEnterAnim="@anim/slide_in_left"
                 app:popExitAnim="@anim/slide_out_right" />
             <action
-                android:id="@+id/action_checkpointsFragment_to_checkpointDetailsFragment"
+                android:id="@+id/action_checkpoints_to_checkpoint_details"
                 app:destination="@id/checkpointDetailsFragment"
                 app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_out_left"

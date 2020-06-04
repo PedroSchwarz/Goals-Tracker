@@ -118,7 +118,7 @@ class RegisterFragment : Fragment() {
 
     private fun goToGoals() {
         val directions =
-            RegisterFragmentDirections.actionGlobalGoalsFragment()
+            RegisterFragmentDirections.actionGlobalToMain()
         controller.navigate(directions)
     }
 

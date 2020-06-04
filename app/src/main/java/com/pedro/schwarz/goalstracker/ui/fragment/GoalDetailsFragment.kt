@@ -201,7 +201,7 @@ class GoalDetailsFragment : Fragment() {
 
     private fun goToCheckpoints() {
         val directions =
-            GoalDetailsFragmentDirections.actionGoalDetailsFragmentToCheckpointsFragment(goalId)
+            GoalDetailsFragmentDirections.actionGoalDetailsToCheckpoints(goalId)
         controller.navigate(directions)
         viewModel.setHide = true
     }
@@ -220,7 +220,7 @@ class GoalDetailsFragment : Fragment() {
 
     private fun goToEditGoal() {
         val directions =
-            GoalDetailsFragmentDirections.actionGoalDetailsFragmentToGoalFormFragment(goalId)
+            GoalDetailsFragmentDirections.actionGoalDetailsToGoalForm(goalId)
         controller.navigate(directions)
         viewModel.setHide = true
     }

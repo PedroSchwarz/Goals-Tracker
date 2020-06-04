@@ -58,7 +58,7 @@ class CheckpointsFragment : Fragment() {
 
     private fun goToDetails(id: Long) {
         val directions =
-            CheckpointsFragmentDirections.actionCheckpointsFragmentToCheckpointDetailsFragment(
+            CheckpointsFragmentDirections.actionCheckpointsToCheckpointDetails(
                 id,
                 goalId
             )
@@ -91,7 +91,7 @@ class CheckpointsFragment : Fragment() {
 
     private fun goToNewCheckpoint() {
         val directions =
-            CheckpointsFragmentDirections.actionCheckpointsFragmentToCheckpointFormFragment(
+            CheckpointsFragmentDirections.actionCheckpointsToCheckpointForm(
                 goalId
             )
         controller.navigate(directions)

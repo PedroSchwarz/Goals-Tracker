@@ -60,7 +60,7 @@ class GoalsFragment : Fragment() {
 
     private fun goToDetails(id: Long, title: String) {
         val directions =
-            GoalsFragmentDirections.actionGoalsFragmentToGoalDetailsFragment(id, title)
+            GoalsFragmentDirections.actionGoalsToGoalDetails(id, title)
         controller.navigate(directions)
     }
 
@@ -90,7 +90,7 @@ class GoalsFragment : Fragment() {
 
     private fun goToGoalForm() {
         val directions =
-            GoalsFragmentDirections.actionGoalsFragmentToGoalFormFragment()
+            GoalsFragmentDirections.actionGoalsToGoalForm()
         controller.navigate(directions)
     }
 
@@ -184,7 +184,7 @@ class GoalsFragment : Fragment() {
 
 
     private fun goToLogin() {
-        val directions = GoalsFragmentDirections.actionGlobalLoginFragment()
+        val directions = GoalsFragmentDirections.actionGlobalToAuth()
         controller.navigate(directions)
     }
 
