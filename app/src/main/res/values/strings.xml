@@ -102,4 +102,5 @@
     <string name="profile_uncompleted_goals_icon">Uncompleted goals icon</string>
     <string name="profile_completed_goals_icon">Completed goals icon</string>
     <string name="goals_tracker_logo">Goals Tracker Logo</string>
+    <string name="welcome_to_goals_tracker">Welcome to Goals Tracker</string>
 </resources>

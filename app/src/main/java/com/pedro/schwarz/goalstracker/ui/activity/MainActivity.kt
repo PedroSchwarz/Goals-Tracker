@@ -61,8 +61,12 @@ class MainActivity : AppCompatActivity() {
     private fun setUIComponents() {
         appViewModel.components.observe(this, Observer { components ->
             components?.apply {
-                if (appBar) supportActionBar?.show()
-                else supportActionBar?.hide()
+                if (appBar.set) {
+                    supportActionBar?.let {
+                        it.show()
+                        it.elevation = appBar.elevation
+                    }
+                } else supportActionBar?.hide()
                 if (bottomNav) mainBottomNav.visibility = View.VISIBLE
                 else mainBottomNav.visibility = View.GONE
             }

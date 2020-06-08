@@ -20,6 +20,7 @@ import com.pedro.schwarz.goalstracker.ui.extensions.setContent
 import com.pedro.schwarz.goalstracker.ui.fragment.extensions.showMessage
 import com.pedro.schwarz.goalstracker.ui.recyclerview.adapter.GoalAdapter
 import com.pedro.schwarz.goalstracker.ui.recyclerview.callback.ItemCallback
+import com.pedro.schwarz.goalstracker.ui.viewmodel.AppBar
 import com.pedro.schwarz.goalstracker.ui.viewmodel.AppViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.Components
 import com.pedro.schwarz.goalstracker.ui.viewmodel.GoalsViewModel
@@ -43,7 +44,6 @@ class CompletedGoalsFragment : Fragment() {
         super.onCreate(savedInstanceState)
         fetchGoals()
         configGoalItemClick()
-        appViewModel.setComponents = Components(appBar = true, bottomNav = true)
     }
 
     private fun configGoalItemClick() {
@@ -81,7 +81,7 @@ class CompletedGoalsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configGoalsList(view)
-        appViewModel.setComponents = Components(appBar = true, bottomNav = true)
+        appViewModel.setComponents = Components(appBar = AppBar(set = true), bottomNav = true)
     }
 
     private fun configGoalsList(view: View) {

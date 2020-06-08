@@ -21,6 +21,7 @@ import com.pedro.schwarz.goalstracker.ui.extensions.setContent
 import com.pedro.schwarz.goalstracker.ui.fragment.extensions.showMessage
 import com.pedro.schwarz.goalstracker.ui.recyclerview.adapter.CheckpointAdapter
 import com.pedro.schwarz.goalstracker.ui.recyclerview.callback.ItemCallback
+import com.pedro.schwarz.goalstracker.ui.viewmodel.AppBar
 import com.pedro.schwarz.goalstracker.ui.viewmodel.AppViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.CheckpointsViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.Components
@@ -100,7 +101,7 @@ class CheckpointsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configCheckpointsList(view)
-        appViewModel.setComponents = Components(appBar = true)
+        appViewModel.setComponents = Components(appBar = AppBar(set = true))
     }
 
     private fun configCheckpointsList(view: View) {

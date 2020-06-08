@@ -1,8 +1,8 @@
 package com.pedro.schwarz.goalstracker.ui.action
 
-import android.app.AlertDialog
 import android.content.Context
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.pedro.schwarz.goalstracker.R

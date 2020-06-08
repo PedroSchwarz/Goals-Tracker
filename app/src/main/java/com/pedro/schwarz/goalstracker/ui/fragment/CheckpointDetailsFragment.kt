@@ -17,6 +17,7 @@ import com.pedro.schwarz.goalstracker.R
 import com.pedro.schwarz.goalstracker.databinding.FragmentCheckpointDetailsBinding
 import com.pedro.schwarz.goalstracker.model.Checkpoint
 import com.pedro.schwarz.goalstracker.ui.databinding.CheckpointData
+import com.pedro.schwarz.goalstracker.ui.viewmodel.AppBar
 import com.pedro.schwarz.goalstracker.ui.viewmodel.AppViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.CheckpointDetailsViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.Components
@@ -70,7 +71,7 @@ class CheckpointDetailsFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configCheckpointMap(view, savedInstanceState)
-        appViewModel.setComponents = Components(appBar = true)
+        appViewModel.setComponents = Components(appBar = AppBar(set = true))
     }
 
     private fun setMapData(checkpoint: Checkpoint) {

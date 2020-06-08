@@ -8,11 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.pedro.schwarz.goalstracker.databinding.FragmentProfileBinding
 import com.pedro.schwarz.goalstracker.ui.databinding.UserData
-import com.pedro.schwarz.goalstracker.ui.viewmodel.AuthViewModel
-import com.pedro.schwarz.goalstracker.ui.viewmodel.ProfileViewModel
+import com.pedro.schwarz.goalstracker.ui.viewmodel.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment() {
+
+    private val appViewModel by sharedViewModel<AppViewModel>()
 
     private val authViewModel by viewModel<AuthViewModel>()
 
@@ -50,5 +52,10 @@ class ProfileFragment : Fragment() {
         viewBinding.lifecycleOwner = this
         viewBinding.user = userData
         viewBinding.viewModel = viewModel
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        appViewModel.setComponents = Components(appBar = AppBar(set = true), bottomNav = true)
     }
 }

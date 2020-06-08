@@ -35,6 +35,7 @@ import com.pedro.schwarz.goalstracker.ui.action.showAlertDialog
 import com.pedro.schwarz.goalstracker.ui.databinding.CheckpointData
 import com.pedro.schwarz.goalstracker.ui.fragment.extensions.showMessage
 import com.pedro.schwarz.goalstracker.ui.validator.isEmpty
+import com.pedro.schwarz.goalstracker.ui.viewmodel.AppBar
 import com.pedro.schwarz.goalstracker.ui.viewmodel.AppViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.CheckpointFormViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.Components
@@ -137,7 +138,7 @@ class CheckpointFormFragment : Fragment(), OnMapReadyCallback, LocationListener 
         super.onViewCreated(view, savedInstanceState)
         checkpointData.setCheckpoint(Checkpoint(goalId = goalId))
         configMap(view, savedInstanceState)
-        appViewModel.setComponents = Components(appBar = true)
+        appViewModel.setComponents = Components(appBar = AppBar(set = true))
     }
 
     private fun configMap(view: View, savedInstanceState: Bundle?) {

@@ -37,7 +37,7 @@ class SplashFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         appViewModel.setComponents = Components()
         CoroutineScope(Dispatchers.IO).launch {
-            delay(3000)
+            delay(1500)
             withContext(Dispatchers.Main) {
                 checkUserState()
             }

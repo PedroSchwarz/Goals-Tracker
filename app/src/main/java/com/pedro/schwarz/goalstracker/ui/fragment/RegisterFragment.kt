@@ -22,6 +22,7 @@ import com.pedro.schwarz.goalstracker.ui.fragment.extensions.showMessage
 import com.pedro.schwarz.goalstracker.ui.validator.isEmpty
 import com.pedro.schwarz.goalstracker.ui.validator.isValidEmail
 import com.pedro.schwarz.goalstracker.ui.validator.isValidPassword
+import com.pedro.schwarz.goalstracker.ui.viewmodel.AppBar
 import com.pedro.schwarz.goalstracker.ui.viewmodel.AppViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.AuthViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.Components
@@ -74,7 +75,7 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        appViewModel.setComponents = Components(appBar = true)
+        appViewModel.setComponents = Components(appBar = AppBar(set = true, elevation = 0f))
     }
 
     private fun setImageBtn(viewBinding: FragmentRegisterBinding) {

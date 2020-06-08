@@ -31,9 +31,9 @@ interface GoalDAO {
     @Query("SELECT * FROM goal WHERE userId = :userId AND targetDate <= :warningDate AND completedMilestones < milestones")
     fun fetchExpiringUncompletedGoals(userId: String, warningDate: Long): List<Goal>
 
-    @Query("SELECT COUNT(*) FROM goal WHERE userId = :userId AND completedMilestones < milestones")
+    @Query("SELECT COUNT(*) FROM goal WHERE userId = :userId AND milestones = 0 OR completedMilestones < milestones")
     fun fetchUncompletedGoalsCount(userId: String): Int
 
-    @Query("SELECT COUNT(*) FROM goal WHERE userId = :userId AND completedMilestones = milestones")
+    @Query("SELECT COUNT(*) FROM goal WHERE userId = :userId AND milestones > 0 AND completedMilestones = milestones")
     fun fetchCompletedGoalsCount(userId: String): Int
 }
