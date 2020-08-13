@@ -98,4 +98,7 @@
     <string name="profile_completed_goals_icon">Ícones de objetivos concluídos</string>
     <string name="goals_tracker_logo">Logo Meus Objetivos</string>
     <string name="welcome_to_goals_tracker">" Bem-Vindo ao Meus Objetivos"</string>
+    <string name="invalid_checkpoint_image">Por favor, escolha uma imagem para usar na marcação.</string>
+    <string name="nav_label_full_image">Imagem Inteira</string>
+    <string name="profile_users_info">Informações do Usuário</string>
 </resources>

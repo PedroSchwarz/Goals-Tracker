@@ -16,6 +16,18 @@
         tools:context=".ui.fragment.CompletedGoalsFragment">
 
 
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/include3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/goals_bakcground" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/completed_goals_list"
             android:layout_width="match_parent"
@@ -23,9 +35,11 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
         <include
+            android:id="@+id/include3"
             layout="@layout/empty_list_warning"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

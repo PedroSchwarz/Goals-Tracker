@@ -233,9 +233,6 @@ class CheckpointFormFragment : Fragment(), OnMapReadyCallback, LocationListener 
         checkpointData.description.value?.let { description ->
             if (isEmpty(description)) return false
         }
-        checkpointData.imageUrl.value?.let { imageUrl ->
-            if (isEmpty(imageUrl)) return false
-        }
         return true
     }
 
@@ -295,10 +292,18 @@ class CheckpointFormFragment : Fragment(), OnMapReadyCallback, LocationListener 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.checkpoint_form_save_action -> {
-                if (isFormValid()) {
-                    saveCheckpoint()
-                } else {
-                    showMessage(getString(R.string.invalid_fields))
+                checkpointData.imageUrl.value?.let { imageUrl ->
+                    when {
+                        isEmpty(imageUrl) -> {
+                            showMessage(getString(R.string.invalid_checkpoint_image))
+                        }
+                        isFormValid() -> {
+                            saveCheckpoint()
+                        }
+                        else -> {
+                            showMessage(getString(R.string.invalid_fields))
+                        }
+                    }
                 }
                 true
             }

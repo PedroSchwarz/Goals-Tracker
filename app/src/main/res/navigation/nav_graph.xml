@@ -90,7 +90,13 @@
             android:id="@+id/profileFragment"
             android:name="com.pedro.schwarz.goalstracker.ui.fragment.ProfileFragment"
             android:label="@string/nav_label_profile"
-            tools:layout="@layout/fragment_profile" />
+            tools:layout="@layout/fragment_profile" >
+            <action
+                android:id="@+id/action_profileFragment_to_fullImageFragment"
+                app:destination="@id/fullImageFragment"
+                app:enterAnim="@anim/slide_up"
+                app:popExitAnim="@anim/slide_down" />
+        </fragment>
         <fragment
             android:id="@+id/goalDetailsFragment"
             android:name="com.pedro.schwarz.goalstracker.ui.fragment.GoalDetailsFragment"
@@ -175,6 +181,20 @@
                 android:name="goalId"
                 android:defaultValue="0L"
                 app:argType="long" />
+            <action
+                android:id="@+id/action_checkpointDetailsFragment_to_fullImageFragment"
+                app:destination="@id/fullImageFragment"
+                app:enterAnim="@anim/slide_up"
+                app:popExitAnim="@anim/slide_down" />
+        </fragment>
+        <fragment
+            android:id="@+id/fullImageFragment"
+            android:name="com.pedro.schwarz.goalstracker.ui.fragment.FullImageFragment"
+            android:label="@string/nav_label_full_image"
+            tools:layout="@layout/fragment_full_image">
+            <argument
+                android:name="imageUrl"
+                app:argType="string" />
         </fragment>
     </navigation>
 </navigation>

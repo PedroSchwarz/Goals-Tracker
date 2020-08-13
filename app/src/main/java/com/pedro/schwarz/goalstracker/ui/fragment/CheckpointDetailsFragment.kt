@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -17,6 +18,7 @@ import com.pedro.schwarz.goalstracker.R
 import com.pedro.schwarz.goalstracker.databinding.FragmentCheckpointDetailsBinding
 import com.pedro.schwarz.goalstracker.model.Checkpoint
 import com.pedro.schwarz.goalstracker.ui.databinding.CheckpointData
+import com.pedro.schwarz.goalstracker.ui.validator.isEmpty
 import com.pedro.schwarz.goalstracker.ui.viewmodel.AppBar
 import com.pedro.schwarz.goalstracker.ui.viewmodel.AppViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.CheckpointDetailsViewModel
@@ -25,6 +27,8 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CheckpointDetailsFragment : Fragment(), OnMapReadyCallback {
+
+    private val controller by lazy { findNavController() }
 
     private val arguments by navArgs<CheckpointDetailsFragmentArgs>()
 
@@ -60,7 +64,26 @@ class CheckpointDetailsFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         val viewBinding = FragmentCheckpointDetailsBinding.inflate(inflater, container, false)
         setViewBindingData(viewBinding)
+        setFullImageBtn(viewBinding)
         return viewBinding.root
+    }
+
+    private fun setFullImageBtn(viewBinding: FragmentCheckpointDetailsBinding) {
+        viewBinding.onFullImage = View.OnClickListener {
+            goToFullImage()
+        }
+    }
+
+    private fun goToFullImage() {
+        checkpointData.imageUrl.value?.let { imageUrl ->
+            if (!isEmpty(imageUrl)) {
+                val directions =
+                    CheckpointDetailsFragmentDirections.actionCheckpointDetailsFragmentToFullImageFragment(
+                        imageUrl
+                    )
+                controller.navigate(directions)
+            }
+        }
     }
 
     private fun setViewBindingData(viewBinding: FragmentCheckpointDetailsBinding) {

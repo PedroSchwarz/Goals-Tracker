@@ -86,13 +86,18 @@ class RegisterFragment : Fragment() {
 
     private fun setRegisterBtn(viewBinding: FragmentRegisterBinding) {
         viewBinding.onRegister = View.OnClickListener {
-            if (userData.imageUrl.value == null) {
-                showMessage(getString(R.string.image_required_alert))
-            }
-            if (isFormValid()) {
-                registerUser()
-            } else {
-                showMessage(getString(R.string.invalid_fields))
+            userData.imageUrl.value?.let { imageUrl ->
+                when {
+                    isEmpty(imageUrl) -> {
+                        showMessage(getString(R.string.image_required_alert))
+                    }
+                    isFormValid() -> {
+                        registerUser()
+                    }
+                    else -> {
+                        showMessage(getString(R.string.invalid_fields))
+                    }
+                }
             }
         }
     }

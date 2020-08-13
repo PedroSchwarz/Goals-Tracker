@@ -101,7 +101,7 @@ class CheckpointsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configCheckpointsList(view)
-        appViewModel.setComponents = Components(appBar = AppBar(set = true))
+        appViewModel.setComponents = Components(appBar = AppBar(set = true, elevation = 0f))
     }
 
     private fun configCheckpointsList(view: View) {

@@ -2,6 +2,7 @@ package com.pedro.schwarz.goalstracker.ui.databinding.adapter
 
 import android.content.res.ColorStateList
 import androidx.cardview.widget.CardView
+import androidx.core.view.marginTop
 import androidx.databinding.BindingAdapter
 import com.pedro.schwarz.goalstracker.R
 import com.pedro.schwarz.goalstracker.ui.extensions.loadCardColor

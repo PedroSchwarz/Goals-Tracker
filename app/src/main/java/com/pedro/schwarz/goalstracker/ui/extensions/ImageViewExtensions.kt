@@ -22,7 +22,6 @@ fun ImageView.loadImage(imageUrl: String, placeholder: Int = placeHolderImage) {
         .load(imageUrl)
         .error(placeholder)
         .placeholder(placeholder)
-        .centerCrop()
         .into(this)
 }
 

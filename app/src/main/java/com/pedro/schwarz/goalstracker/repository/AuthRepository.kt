@@ -24,7 +24,7 @@ class AuthRepository(private val userSharedPreferences: UserSharedPreferences) {
                     "$IMAGE_PATH/$id",
                     user.imageUrl,
                     onSuccess = { imageUrl ->
-                        val updatedUser = user.copy(id = id, imageUrl = imageUrl)
+                        val updatedUser = user.copy(id = id, password = "", imageUrl = imageUrl)
                         FirestoreService.insertDocument(
                             USER_COLLECTION,
                             id,

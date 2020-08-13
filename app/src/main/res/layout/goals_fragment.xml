@@ -19,6 +19,18 @@
         android:layout_height="match_parent"
         tools:context=".ui.fragment.GoalsFragment">
 
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/include"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/goals_bakcground" />
+
         <include
             android:id="@+id/include"
             layout="@layout/empty_list_warning"
@@ -38,7 +50,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:setIsRefreshing="@{viewModel.isRefreshing}">
+            app:setIsRefreshing="@{viewModel.isRefreshing}"
+            tools:visibility="visible">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/goals_list"

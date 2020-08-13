@@ -81,7 +81,7 @@ class CompletedGoalsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configGoalsList(view)
-        appViewModel.setComponents = Components(appBar = AppBar(set = true), bottomNav = true)
+        appViewModel.setComponents = Components(appBar = AppBar(set = true, elevation = 0f), bottomNav = true)
     }
 
     private fun configGoalsList(view: View) {

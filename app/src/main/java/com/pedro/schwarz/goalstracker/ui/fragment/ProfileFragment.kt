@@ -6,13 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.pedro.schwarz.goalstracker.databinding.FragmentProfileBinding
 import com.pedro.schwarz.goalstracker.ui.databinding.UserData
+import com.pedro.schwarz.goalstracker.ui.validator.isEmpty
 import com.pedro.schwarz.goalstracker.ui.viewmodel.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment() {
+
+    private val controller by lazy { findNavController() }
 
     private val appViewModel by sharedViewModel<AppViewModel>()
 
@@ -45,7 +49,24 @@ class ProfileFragment : Fragment() {
     ): View? {
         val viewBinding = FragmentProfileBinding.inflate(inflater, container, false)
         setViewBindingData(viewBinding)
+        setFullImageBtn(viewBinding)
         return viewBinding.root
+    }
+
+    private fun setFullImageBtn(viewBinding: FragmentProfileBinding) {
+        viewBinding.onFullImage = View.OnClickListener {
+            goToFullImage()
+        }
+    }
+
+    private fun goToFullImage() {
+        userData.imageUrl.value?.let { imageUrl ->
+            if (!isEmpty(imageUrl)) {
+                val directions =
+                    ProfileFragmentDirections.actionProfileFragmentToFullImageFragment(imageUrl)
+                controller.navigate(directions)
+            }
+        }
     }
 
     private fun setViewBindingData(viewBinding: FragmentProfileBinding) {
@@ -56,6 +77,6 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        appViewModel.setComponents = Components(appBar = AppBar(set = true), bottomNav = true)
+        appViewModel.setComponents = Components(appBar = AppBar(set = true, elevation = 0f), bottomNav = true)
     }
 }

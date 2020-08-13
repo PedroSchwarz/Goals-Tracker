@@ -83,7 +83,7 @@
     <string name="nav_label_profile">Profile</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="image_required_alert">Please choose an profile image.</string>
+    <string name="image_required_alert">Please choose a profile image.</string>
     <string name="goal_almost_complete_title">Goal Almost Complete</string>
     <string name="goal_almost_complete_description">Congrats!</string>
     <string name="goal_almost_complete_long_description_start">\"Your goal \"</string>
@@ -103,4 +103,8 @@
     <string name="profile_completed_goals_icon">Completed goals icon</string>
     <string name="goals_tracker_logo">Goals Tracker Logo</string>
     <string name="welcome_to_goals_tracker">Welcome to Goals Tracker</string>
+    <string name="invalid_checkpoint_image">Please choose a image for this checkpoint.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="nav_label_full_image">Full Image</string>
+    <string name="profile_users_info">User\'s Info</string>
 </resources>
