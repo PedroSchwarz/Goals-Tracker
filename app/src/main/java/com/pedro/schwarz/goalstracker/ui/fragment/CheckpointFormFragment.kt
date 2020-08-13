@@ -35,6 +35,7 @@ import com.pedro.schwarz.goalstracker.ui.action.showAlertDialog
 import com.pedro.schwarz.goalstracker.ui.databinding.CheckpointData
 import com.pedro.schwarz.goalstracker.ui.fragment.extensions.showMessage
 import com.pedro.schwarz.goalstracker.ui.validator.isEmpty
+import com.pedro.schwarz.goalstracker.ui.viewmodel.AppBar
 import com.pedro.schwarz.goalstracker.ui.viewmodel.AppViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.CheckpointFormViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.Components
@@ -137,7 +138,7 @@ class CheckpointFormFragment : Fragment(), OnMapReadyCallback, LocationListener 
         super.onViewCreated(view, savedInstanceState)
         checkpointData.setCheckpoint(Checkpoint(goalId = goalId))
         configMap(view, savedInstanceState)
-        appViewModel.setComponents = Components(appBar = true)
+        appViewModel.setComponents = Components(appBar = AppBar(set = true))
     }
 
     private fun configMap(view: View, savedInstanceState: Bundle?) {
@@ -232,9 +233,6 @@ class CheckpointFormFragment : Fragment(), OnMapReadyCallback, LocationListener 
         checkpointData.description.value?.let { description ->
             if (isEmpty(description)) return false
         }
-        checkpointData.imageUrl.value?.let { imageUrl ->
-            if (isEmpty(imageUrl)) return false
-        }
         return true
     }
 
@@ -294,10 +292,18 @@ class CheckpointFormFragment : Fragment(), OnMapReadyCallback, LocationListener 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.checkpoint_form_save_action -> {
-                if (isFormValid()) {
-                    saveCheckpoint()
-                } else {
-                    showMessage(getString(R.string.invalid_fields))
+                checkpointData.imageUrl.value?.let { imageUrl ->
+                    when {
+                        isEmpty(imageUrl) -> {
+                            showMessage(getString(R.string.invalid_checkpoint_image))
+                        }
+                        isFormValid() -> {
+                            saveCheckpoint()
+                        }
+                        else -> {
+                            showMessage(getString(R.string.invalid_fields))
+                        }
+                    }
                 }
                 true
             }

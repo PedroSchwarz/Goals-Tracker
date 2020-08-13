@@ -3,6 +3,7 @@ package com.pedro.schwarz.goalstracker.worker
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.pedro.schwarz.goalstracker.R
 import com.pedro.schwarz.goalstracker.repository.GoalRepository
 import com.pedro.schwarz.goalstracker.service.showNotification
 import org.koin.core.KoinComponent
@@ -19,9 +20,11 @@ class ExpiringNotificationWorker(context: Context, params: WorkerParameters) :
                 goals.forEach { goal ->
                     showNotification(
                         applicationContext,
-                        "Goal Expiring",
-                        "Warning about ${goal.title}",
-                        "Your goal ${goal.title} is about reach it's target date and you haven't completed it yet!"
+                        applicationContext.getString(R.string.goal_expiring_title),
+                        applicationContext.getString(R.string.goal_expiring_description) + goal.title,
+                        applicationContext.getString(R.string.goal_expiring_long_description_start) + goal.title + applicationContext.getString(
+                            R.string.goal_expiring_long_description_end
+                        )
                     )
                 }
             }

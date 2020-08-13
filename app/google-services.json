@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "769538958392-etggn4giph3udv9nfossdfgm9rccshm6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pedro.schwarz.goalstracker",
+            "certificate_hash": "8ef49e3d7497d8a0266480201829db6dd6c84c2e"
+          }
+        },
+        {
           "client_id": "769538958392-05kgl8rv0notpi5vrmudd6pm8mvmdh4q.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -93,6 +93,32 @@ class GoalRepository(private val goalDAO: GoalDAO) {
             }
         }
 
+    fun fetchUncompletedGoalsCount() = MutableLiveData<Int>().also { liveData ->
+        auth.currentUser?.let { firebaseUser ->
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val count = goalDAO.fetchUncompletedGoalsCount(firebaseUser.uid)
+                    liveData.postValue(count)
+                } catch (e: IOException) {
+                    liveData.postValue(0)
+                }
+            }
+        }
+    }
+
+    fun fetchCompletedGoalsCount() = MutableLiveData<Int>().also { liveData ->
+        auth.currentUser?.let { firebaseUser ->
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val count = goalDAO.fetchCompletedGoalsCount(firebaseUser.uid)
+                    liveData.postValue(count)
+                } catch (e: IOException) {
+                    liveData.postValue(0)
+                }
+            }
+        }
+    }
+
     private fun deleteChildrenCheckpoints(goal: Goal) {
         FirestoreService.deleteChildren(
             CHECKPOINT_COLLECTION,

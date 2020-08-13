@@ -90,7 +90,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkpoint_form_image_btn"
-                app:loadImage="@{checkpoint.imageUrl}" />
+                app:loadImage="@{checkpoint.imageUrl}"
+                tools:srcCompat="@drawable/image_placeholder" />
 
             <Button
                 android:id="@+id/checkpoint_form_location_btn"

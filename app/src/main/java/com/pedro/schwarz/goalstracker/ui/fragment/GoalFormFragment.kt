@@ -22,6 +22,7 @@ import com.pedro.schwarz.goalstracker.ui.fragment.extensions.showMessage
 import com.pedro.schwarz.goalstracker.ui.recyclerview.adapter.CategoryAdapter
 import com.pedro.schwarz.goalstracker.ui.recyclerview.adapter.PriorityAdapter
 import com.pedro.schwarz.goalstracker.ui.validator.isEmpty
+import com.pedro.schwarz.goalstracker.ui.viewmodel.AppBar
 import com.pedro.schwarz.goalstracker.ui.viewmodel.AppViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.Components
 import com.pedro.schwarz.goalstracker.ui.viewmodel.GoalFormViewModel
@@ -104,7 +105,7 @@ class GoalFormFragment : Fragment() {
         configCategoryList(view)
         configPriorityList(view)
         setListsListeners()
-        appViewModel.setComponents = Components(appBar = true)
+        appViewModel.setComponents = Components(appBar = AppBar(set = true))
     }
 
     private fun setListsListeners() {

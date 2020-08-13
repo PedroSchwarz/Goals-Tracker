@@ -8,6 +8,10 @@
         <variable
             name="checkpoint"
             type="com.pedro.schwarz.goalstracker.ui.databinding.CheckpointData" />
+
+        <variable
+            name="onFullImage"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <ScrollView
@@ -22,7 +26,7 @@
             <ImageView
                 android:id="@+id/checkpoint_details_image"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="300dp"
                 android:contentDescription="@string/checkpoint_image"
                 android:scaleType="centerCrop"
                 android:src="@drawable/image_placeholder"
@@ -30,6 +34,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:loadImage="@{checkpoint.imageUrl}" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/checkpoint_details_full_image_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{onFullImage}"
+                app:backgroundTint="@color/colorInfo"
+                app:fabSize="normal"
+                app:layout_constraintBottom_toBottomOf="@+id/checkpoint_details_image"
+                app:layout_constraintEnd_toEndOf="@+id/checkpoint_details_image"
+                app:layout_constraintTop_toBottomOf="@+id/checkpoint_details_image"
+                app:srcCompat="@drawable/ic_fullscreen"
+                app:tint="@color/colorLight" />
 
             <TextView
                 android:id="@+id/checkpoint_details_description"
@@ -51,6 +71,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:textSize="16sp"
                 app:formatDate="@{checkpoint.createdAt}"
                 app:layout_constraintEnd_toEndOf="@+id/checkpoint_details_description"
                 app:layout_constraintStart_toStartOf="@+id/checkpoint_details_description"
@@ -61,9 +82,7 @@
                 android:id="@+id/checkpoint_details_map"
                 android:layout_width="0dp"
                 android:layout_height="250dp"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkpoint_details_created_at" />
@@ -72,17 +91,17 @@
                 android:id="@+id/checkpoint_details_location"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:background="@drawable/checkpoint_details_location_background"
-                android:elevation="5dp"
                 android:text="@{checkpoint.address}"
                 android:textColor="@color/colorLight"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/checkpoint_details_map"
                 app:layout_constraintStart_toStartOf="@+id/checkpoint_details_map"
                 app:layout_constraintTop_toBottomOf="@+id/checkpoint_details_map"
                 app:layout_constraintVertical_bias="0.0"
                 tools:text="Checkpoint's location" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

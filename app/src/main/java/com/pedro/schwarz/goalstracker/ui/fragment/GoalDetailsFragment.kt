@@ -32,6 +32,7 @@ import com.pedro.schwarz.goalstracker.ui.recyclerview.adapter.MilestoneAdapter
 import com.pedro.schwarz.goalstracker.ui.recyclerview.callback.ItemCallback
 import com.pedro.schwarz.goalstracker.ui.recyclerview.listener.ScrollListener
 import com.pedro.schwarz.goalstracker.ui.validator.isEmpty
+import com.pedro.schwarz.goalstracker.ui.viewmodel.AppBar
 import com.pedro.schwarz.goalstracker.ui.viewmodel.AppViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.Components
 import com.pedro.schwarz.goalstracker.ui.viewmodel.GoalDetailsViewModel
@@ -201,7 +202,7 @@ class GoalDetailsFragment : Fragment() {
 
     private fun goToCheckpoints() {
         val directions =
-            GoalDetailsFragmentDirections.actionGoalDetailsFragmentToCheckpointsFragment(goalId)
+            GoalDetailsFragmentDirections.actionGoalDetailsToCheckpoints(goalId)
         controller.navigate(directions)
         viewModel.setHide = true
     }
@@ -220,7 +221,7 @@ class GoalDetailsFragment : Fragment() {
 
     private fun goToEditGoal() {
         val directions =
-            GoalDetailsFragmentDirections.actionGoalDetailsFragmentToGoalFormFragment(goalId)
+            GoalDetailsFragmentDirections.actionGoalDetailsToGoalForm(goalId)
         controller.navigate(directions)
         viewModel.setHide = true
     }
@@ -241,7 +242,7 @@ class GoalDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configMilestonesList(view)
-        appViewModel.setComponents = Components(appBar = true)
+        appViewModel.setComponents = Components(appBar = AppBar(set = true))
     }
 
     private fun configMilestonesList(view: View) {

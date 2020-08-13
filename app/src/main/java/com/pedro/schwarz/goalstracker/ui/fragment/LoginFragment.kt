@@ -17,6 +17,7 @@ import com.pedro.schwarz.goalstracker.ui.fragment.extensions.showMessage
 import com.pedro.schwarz.goalstracker.ui.validator.isEmpty
 import com.pedro.schwarz.goalstracker.ui.validator.isValidEmail
 import com.pedro.schwarz.goalstracker.ui.validator.isValidPassword
+import com.pedro.schwarz.goalstracker.ui.viewmodel.AppBar
 import com.pedro.schwarz.goalstracker.ui.viewmodel.AppViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.AuthViewModel
 import com.pedro.schwarz.goalstracker.ui.viewmodel.Components
@@ -33,19 +34,6 @@ class LoginFragment : Fragment() {
 
     private val userData by lazy { UserData() }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        checkUserState()
-    }
-
-    private fun checkUserState() {
-        viewModel.checkUserState().observe(this, Observer { result ->
-            when (result) {
-                is Success -> goToGoal()
-            }
-        })
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,7 +47,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        appViewModel.setComponents = Components(appBar = true)
+        appViewModel.setComponents = Components(appBar = AppBar(set = true, elevation = 0f))
     }
 
     private fun setGoToRegisterBtn(viewBinding: FragmentLoginBinding) {
@@ -101,7 +89,7 @@ class LoginFragment : Fragment() {
 
     private fun goToGoal() {
         val directions =
-            LoginFragmentDirections.actionGlobalGoalsFragment()
+            LoginFragmentDirections.actionGlobalToMain()
         controller.navigate(directions)
     }
 
@@ -130,7 +118,7 @@ class LoginFragment : Fragment() {
 
     private fun goToRegister() {
         val directions =
-            LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
+            LoginFragmentDirections.actionLoginToRegister()
         controller.navigate(directions)
     }
 }

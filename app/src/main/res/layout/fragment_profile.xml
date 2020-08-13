@@ -8,6 +8,14 @@
         <variable
             name="user"
             type="com.pedro.schwarz.goalstracker.ui.databinding.UserData" />
+
+        <variable
+            name="viewModel"
+            type="com.pedro.schwarz.goalstracker.ui.viewmodel.ProfileViewModel" />
+
+        <variable
+            name="onFullImage"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <ScrollView
@@ -16,62 +24,258 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:context=".ui.fragment.ProfileFragment">
+            android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/profile_avatar"
+                android:id="@+id/imageView7"
                 android:layout_width="0dp"
-                android:layout_height="300dp"
-                android:contentDescription="@string/profile_user_avatar_image"
-                android:scaleType="centerCrop"
+                android:layout_height="250dp"
+                android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:loadImage="@{user.imageUrl}"
-                tools:srcCompat="@drawable/image_placeholder" />
+                app:srcCompat="@drawable/goals_bakcground" />
 
-            <View
-                android:id="@+id/profile_divider"
-                android:layout_width="0dp"
-                android:layout_height="3dp"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_avatar"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:background="@color/colorPrimary"
+                android:contentDescription="@string/profile_avatar"
+                android:elevation="5dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image_placeholder"
+                app:civ_border_color="@color/colorInfo"
+                app:civ_border_width="2dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView7"
+                app:layout_constraintStart_toStartOf="@+id/imageView7"
+                app:layout_constraintTop_toTopOf="@+id/imageView7"
+                app:loadImage="@{user.imageUrl}" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/profile_full_image_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{onFullImage}"
+                app:backgroundTint="@color/colorInfo"
+                app:layout_constraintBottom_toBottomOf="@+id/profile_avatar"
+                app:layout_constraintEnd_toEndOf="@+id/profile_avatar"
+                app:srcCompat="@drawable/ic_fullscreen"
+                app:tint="@color/colorLight" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/colorLight"
+                app:cardCornerRadius="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile_avatar" />
+                app:layout_constraintTop_toBottomOf="@+id/profile_avatar">
 
-            <TextView
-                android:id="@+id/profile_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@{user.name}"
-                android:textAlignment="center"
-                android:textColor="@color/colorDark"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/profile_divider"
-                app:layout_constraintStart_toStartOf="@+id/profile_divider"
-                app:layout_constraintTop_toBottomOf="@+id/profile_divider"
-                tools:text="User's name" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/profile_goals_summary_background"
+                    tools:layout_editor_absoluteY="405dp">
 
-            <TextView
-                android:id="@+id/profile_email"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                android:text="@{user.email}"
-                android:textAlignment="center"
-                android:textColor="@color/colorMediumDark"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/profile_name"
-                app:layout_constraintStart_toStartOf="@+id/profile_name"
-                app:layout_constraintTop_toBottomOf="@+id/profile_name"
-                tools:text="User's email" />
+                    <TextView
+                        android:id="@+id/profile_card_info_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/profile_users_info"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorLight"
+                        android:textSize="20sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/profile_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/profile_goals_summary_item_background"
+                        android:text="@{user.name}"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorLight"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="@+id/profile_card_info_title"
+                        app:layout_constraintStart_toStartOf="@+id/profile_card_info_title"
+                        app:layout_constraintTop_toBottomOf="@+id/profile_card_info_title"
+                        tools:text="User's name" />
+
+                    <TextView
+                        android:id="@+id/profile_email"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:background="@drawable/profile_goals_summary_item_background"
+                        android:text="@{user.email}"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorLight"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="@+id/profile_name"
+                        app:layout_constraintStart_toStartOf="@+id/profile_name"
+                        app:layout_constraintTop_toBottomOf="@+id/profile_name"
+                        tools:text="User's email" />
+
+                    <View
+                        android:id="@+id/divider4"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@color/colorInfo"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/profile_email" />
+
+                    <TextView
+                        android:id="@+id/profile_card_summary_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/profile_goals_summary"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorLight"
+                        android:textSize="20sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/divider4" />
+
+                    <TextView
+                        android:id="@+id/profile_card_completed_goals"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/profile_goals_summary_item_background"
+                        android:elevation="2dp"
+                        android:text="@string/profile_completed_goals_count"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorLight"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="@+id/profile_card_summary_title"
+                        app:layout_constraintStart_toStartOf="@+id/profile_card_summary_title"
+                        app:layout_constraintTop_toBottomOf="@+id/profile_card_summary_title" />
+
+                    <ImageView
+                        android:id="@+id/profile_completed_count_background"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:contentDescription="@string/profile_completed_goals_icon"
+                        android:elevation="3dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/profile_card_completed_goals"
+                        app:layout_constraintEnd_toEndOf="@+id/profile_card_completed_goals"
+                        app:layout_constraintStart_toEndOf="@+id/profile_card_completed_goals"
+                        app:layout_constraintTop_toTopOf="@+id/profile_card_completed_goals"
+                        app:srcCompat="@drawable/circular_white_background" />
+
+                    <TextView
+                        android:id="@+id/profile_card_completed_goals_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="3dp"
+                        android:text="@{viewModel.completedCount.toString()}"
+                        android:textColor="@color/colorDark"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/profile_completed_count_background"
+                        app:layout_constraintEnd_toEndOf="@+id/profile_completed_count_background"
+                        app:layout_constraintStart_toStartOf="@+id/profile_completed_count_background"
+                        app:layout_constraintTop_toTopOf="@+id/profile_completed_count_background" />
+
+                    <ImageView
+                        android:id="@+id/profile_card_completed_goals_icon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:contentDescription="@string/profile_completed_goals_icon"
+                        android:elevation="2dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/profile_card_completed_goals"
+                        app:layout_constraintEnd_toStartOf="@+id/profile_card_completed_goals"
+                        app:layout_constraintStart_toStartOf="@+id/profile_card_completed_goals"
+                        app:layout_constraintTop_toTopOf="@+id/profile_card_completed_goals"
+                        app:srcCompat="@drawable/completed_goals_background" />
+
+                    <TextView
+                        android:id="@+id/profile_card_uncompleted_goals"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="32dp"
+                        android:background="@drawable/profile_goals_summary_item_background"
+                        android:elevation="2dp"
+                        android:text="@string/profile_uncompleted_goals_count"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorLight"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/profile_card_completed_goals"
+                        app:layout_constraintStart_toStartOf="@+id/profile_card_completed_goals"
+                        app:layout_constraintTop_toBottomOf="@+id/profile_card_completed_goals" />
+
+                    <ImageView
+                        android:id="@+id/profile_uncompleted_count_background"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:contentDescription="@string/profile_uncompleted_goals_icon"
+                        android:elevation="3dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/profile_card_uncompleted_goals"
+                        app:layout_constraintEnd_toEndOf="@+id/profile_card_uncompleted_goals"
+                        app:layout_constraintStart_toEndOf="@+id/profile_card_uncompleted_goals"
+                        app:layout_constraintTop_toTopOf="@+id/profile_card_uncompleted_goals"
+                        app:srcCompat="@drawable/circular_white_background" />
+
+                    <TextView
+                        android:id="@+id/profile_card_uncompleted_goals_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/profile_uncompleted_goals_icon"
+                        android:elevation="3dp"
+                        android:text="@{viewModel.uncompletedCount.toString()}"
+                        android:textColor="@color/colorDark"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/profile_uncompleted_count_background"
+                        app:layout_constraintEnd_toEndOf="@+id/profile_uncompleted_count_background"
+                        app:layout_constraintStart_toStartOf="@+id/profile_uncompleted_count_background"
+                        app:layout_constraintTop_toTopOf="@+id/profile_uncompleted_count_background" />
+
+                    <ImageView
+                        android:id="@+id/profile_card_uncompleted_goals_icon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:contentDescription="@string/profile_uncompleted_goals_icon"
+                        android:elevation="2dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/profile_card_uncompleted_goals"
+                        app:layout_constraintEnd_toStartOf="@+id/profile_card_uncompleted_goals"
+                        app:layout_constraintStart_toStartOf="@+id/profile_card_uncompleted_goals"
+                        app:layout_constraintTop_toTopOf="@+id/profile_card_uncompleted_goals"
+                        app:srcCompat="@drawable/uncompleted_goals_background" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

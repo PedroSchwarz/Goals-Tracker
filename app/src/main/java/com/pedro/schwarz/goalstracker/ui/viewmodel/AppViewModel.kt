@@ -16,4 +16,6 @@ class AppViewModel : ViewModel() {
         }
 }
 
-class Components(val appBar: Boolean = false, val bottomNav: Boolean = false)
+class Components(val appBar: AppBar = AppBar(), val bottomNav: Boolean = false)
+
+class AppBar(val set: Boolean = false, val elevation: Float = 11.0f)

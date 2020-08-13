@@ -24,129 +24,151 @@
             type="android.view.View.OnClickListener" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragment.RegisterFragment">
+        android:clipToPadding="true"
+        android:fillViewport="true">
 
-        <ProgressBar
-            android:id="@+id/register_progress"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:indeterminate="true"
-            android:visibility="@{authViewModel.isLoading ? View.VISIBLE : View.GONE}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.fragment.RegisterFragment">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/register_image"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/image_placeholder"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_progress"
-            app:loadImage="@{user.imageUrl}" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/register_image_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="@{onSelectImage}"
-            android:src="@drawable/ic_camera"
-            app:backgroundTint="@color/colorAccent"
-            app:layout_constraintBottom_toBottomOf="@+id/register_image"
-            app:layout_constraintEnd_toEndOf="@+id/register_image"
-            app:tint="@color/colorLight" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/register_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            app:boxBackgroundColor="#00FFFFFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_image"
-            app:validateField="@{user.name}">
-
-            <com.google.android.material.textfield.TextInputEditText
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
                 android:layout_width="match_parent"
+                android:layout_height="235dp"
+                android:background="@drawable/register_image_background"
+                android:elevation="11dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/register_image"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/image_placeholder"
+                    app:civ_border_color="@color/colorAccent"
+                    app:civ_border_width="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.497"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:loadImage="@{user.imageUrl}" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/register_image_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="@{onSelectImage}"
+                    android:src="@drawable/ic_camera"
+                    app:backgroundTint="@color/colorAccent"
+                    app:layout_constraintBottom_toBottomOf="@+id/register_image"
+                    app:layout_constraintEnd_toEndOf="@+id/register_image"
+                    app:tint="@color/colorLight" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_name"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/register_full_name"
-                android:inputType="textCapWords"
-                android:text="@={user.name}" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:boxBackgroundColor="#00FFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+                app:validateField="@{user.name}">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/register_email"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:boxBackgroundColor="#00FFFFFF"
-            app:layout_constraintEnd_toEndOf="@+id/register_name"
-            app:layout_constraintStart_toStartOf="@+id/register_name"
-            app:layout_constraintTop_toBottomOf="@+id/register_name"
-            app:validateField="@{user.email}">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/register_full_name"
+                    android:inputType="textCapWords"
+                    android:text="@={user.name}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_email"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/register_email"
-                android:inputType="textEmailAddress"
-                android:text="@={user.email}" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="16dp"
+                app:boxBackgroundColor="#00FFFFFF"
+                app:layout_constraintEnd_toEndOf="@+id/register_name"
+                app:layout_constraintStart_toStartOf="@+id/register_name"
+                app:layout_constraintTop_toBottomOf="@+id/register_name"
+                app:validateField="@{user.email}">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/register_password"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:boxBackgroundColor="#00FFFFFF"
-            app:layout_constraintEnd_toEndOf="@+id/register_email"
-            app:layout_constraintStart_toStartOf="@+id/register_email"
-            app:layout_constraintTop_toBottomOf="@+id/register_email"
-            app:passwordToggleEnabled="true"
-            app:validateField="@{user.password}">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/register_email"
+                    android:inputType="textEmailAddress"
+                    android:text="@={user.email}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_password"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/register_password"
-                android:inputType="textPassword"
-                android:text="@={user.password}" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="16dp"
+                app:boxBackgroundColor="#00FFFFFF"
+                app:layout_constraintEnd_toEndOf="@+id/register_email"
+                app:layout_constraintStart_toStartOf="@+id/register_email"
+                app:layout_constraintTop_toBottomOf="@+id/register_email"
+                app:passwordToggleEnabled="true"
+                app:validateField="@{user.password}">
 
-        <Button
-            android:id="@+id/register_create_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/colorAccent"
-            android:enabled="@{authViewModel.isLoading ? false : true}"
-            android:onClick="@{onRegister}"
-            android:text="@string/register_register"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_password"
-            app:layout_constraintVertical_bias="1.0" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/register_password"
+                    android:inputType="textPassword"
+                    android:text="@={user.password}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ProgressBar
+                android:id="@+id/register_progress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:indeterminate="true"
+                android:visibility="@{authViewModel.isLoading ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toTopOf="@+id/register_create_btn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/register_create_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorAccent"
+                android:enabled="@{authViewModel.isLoading ? false : true}"
+                android:onClick="@{onRegister}"
+                android:text="@string/register_register"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/register_password"
+                app:layout_constraintVertical_bias="1.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

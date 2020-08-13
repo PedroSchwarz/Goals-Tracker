@@ -5,7 +5,6 @@
     <color name="colorAccent">#FF6E40</color>
     <color name="colorSuccess">#4CAF50</color>
     <color name="colorInfo">#03A9F4</color>
-    <color name="colorWarning">#FFC107</color>
     <color name="colorError">#F44336</color>
     <color name="colorLight">#FFFFFF</color>
     <color name="colorDark">#222222</color>
@@ -23,4 +22,5 @@
     <color name="colorLow">#4CAF50</color>
     <color name="colorMedium">#FBCC21</color>
     <color name="colorHigh">#F44336</color>
+    <color name="black_overlay">#66000000</color>
 </resources>
